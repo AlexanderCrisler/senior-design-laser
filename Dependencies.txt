@@ -1,0 +1,4 @@
+Phidget Drivers for Windows: https://www.phidgets.com/docs/OS_-_Windows#Quick_Downloads
+
+python -m pip install Phidget22
+
