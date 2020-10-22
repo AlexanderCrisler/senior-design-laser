@@ -2,6 +2,9 @@ from Phidget22.Phidget import *
 from Phidget22.Devices.RCServo import *
 import time
 
+# Created Classes
+from servo_keyboard_control import ServoKeyboardControl
+
 #Declare any event handlers here. These will be called every time the associated event occurs.
 
 def main():
@@ -24,6 +27,9 @@ def main():
 	rcServo0.setEngaged(True)
 	rcServo1.setTargetPosition(90)
 	rcServo1.setEngaged(True)
+
+	kb_controller = ServoKeyboardControl()
+	kb_controller.keyboard_control()
 
 	try:
 		input("Press Enter to Stop\n")
