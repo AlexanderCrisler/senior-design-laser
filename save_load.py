@@ -1,18 +1,15 @@
 import json
 
-people = [{"name" : "Spencer", "languages" : ["English", "Spanish", "Italian"]},{"name": "Jason", "languages" : ["English", "Something"]}]
+items = {"apple": {"x": 4.86, "y": 2.3}, "banana": {"x": 2.2, "y": -.15}} 
 
 afile = open("person", 'w')
-json.dump(people, afile)
+json.dump(items, afile)
 afile.close()
 
 
 
 bfile = open("person", 'r')
-newpeople = json.load(bfile)
+newitems = json.load(bfile)
 bfile.close()
 
-for a, b in zip(people, newpeople):
-    print(a)
-    print(b)
-    print('\n')
+print(newitems)
