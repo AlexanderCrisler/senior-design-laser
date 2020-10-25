@@ -58,10 +58,13 @@ class laser_guides:
 
     # Event for clicking on item in listbox
     def on_select(self, event):
-        # Grabs item from listbox and displays item with its coordinates 
-        item = event.widget.get(event.widget.curselection())
-        dict_item = self.mappings[item]
-        self.infobox['text'] = (item + "\nx coordinate: " + str(dict_item["x"]) + "\ny coordinate: " + str(dict_item["y"]) + "\n")
+        # Grabs item from listbox and displays item with its coordinates
+        try:
+            item = event.widget.get(event.widget.curselection())
+            dict_item = self.mappings[item]
+            self.infobox['text'] = (item + "\nx coordinate: " + str(dict_item["x"]) + "\ny coordinate: " + str(dict_item["y"]) + "\n")
+        except:
+            print("No value in listbox selected")
 
 
 root = tk.Tk()
