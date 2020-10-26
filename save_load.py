@@ -1,72 +1,110 @@
 import json
+import io
+
+# Tests for this class can be run from 'test_save_load.py'
+# #TODO: function to delete saved object
+
+class StartMenu():
+    def save(self, items={}, write_file=None, file_name=None) -> bool:
+        _sort_dict(items)
+
+        if write_file:
+            try:
+                json.dump(items, write_file)
+                return True
+            except Exception as e:
+                print(e)
+                pass
+            finally:
+                write_file.close()
+        elif file_name:
+            try:
+                write_file = open(file_name, 'w')
+                json.dump(items, write_file)
+                return True
+            except Exception as e:
+                print(e)
+                pass
+            finally:
+                if write_file:
+                    write_file.close()
+        else:
+            write_file.close()
+        
+        return False
+
+    def load(self, read_file=None, file_name=None) -> dict:
+        if read_file:
+            try:
+                return json.load(read_file)
+            except Exception as e:
+                print(e)
+                pass
+            finally:
+                read_file.close()
+        elif file_name:
+            try:
+                read_file = open(file_name, 'r')
+                items = json.load(read_file)
+                read_file.close()
+                return items
+            except Exception as e:
+                print(e)
+                pass
+            finally:
+                if read_file:
+                    read_file.close()
+        else:
+            write_file.close()
+
+        return {}
 
 """
-items = {"apple": {"x": 4.86, "y": 2.3}, "banana": {"x": 2.2, "y": -.15}} 
+def load_file(read_file) -> dict:
+    Reads json information from file name.
+    #   read_file : Either Name of file to be opened and read from or File object that is open to be read.
+    if isinstance(read_file, io.TextIOWrapper) and read_file.mode == 'r':
+        items = json.load(read_file)
+        return items
+    elif type(read_file) == str:
+        try:
+            read_file = open(read_file, 'r')
+            items = json.load(read_file)
+            read_file.close()
+            return items
+        except FileNotFoundError:
+            save_file({}, read_file)
+            return {}
+        except json.JSONDecodeError:
+            save_file({}, read_file)
+            return {}
+    else:
+        return None
 
-afile = open("person.json", 'w')
-json.dump(items, afile, sort_keys=True, indent=4)
-afile.close()
 
+def save_file(items_dict, write_file) -> bool:
+    #Saves dictionary to file in json format. Returns if no exceptions are raised.
+    #   items_dict : Dictionary of items to be saved in json format.
+    #   write_file : Either Name of file to be written or File object that is open to be written to.
 
+    # Sorting the dictionary
+    _sort_dict(items_dict)
 
-bfile = open("person.json", 'r')
-newitems = json.load(bfile)
-bfile.close()
+    if isinstance(write_file, io.TextIOWrapper) and write_file.mode == 'w':
+        json.dump(items_dict, write_file, sort_keys=True, indent=4)
+        return True
+    elif type(write_file) == str:
+            write_file = open(write_file, 'w')
 
-print(newitems)
+            json.dump(items_dict, write_file, sort_keys=True, indent=4)
+            write_file.close()
+            return True
+    else:
+        return False
 """
 
-# Name
-# XY coordinate
-# saved in ever expanding JSON file
-# using dictionary of dictionaries
-
-#TODO: function to save/append to JSON file
-#TODO: function to read from existing JSON file
-#TODO: function to delete saved object
-
-def save_object(name, x, y, list_of_saved_objects):
-    """Saving a newly created object to list of saved objects"""
-    new_dict = {"name": name, "x": x, "y": y}
-
-    # Adding the new dictionary to the working list of all objects
-    list_of_saved_objects.append(new_dict)
-    list_of_saved_objects = sorted(list_of_saved_objects, key = lambda i: (i['name']))
-
-    # Adding the new dictionary to the save file
-    file_name = open("stored_objects.json", 'w')
-    json.dump(list_of_saved_objects, file_name, sort_keys=True, indent=4)
-    file_name.close()
-
-    return
-
-
-def load_saved_objects():
-    """Loading the save file to a dictionary"""
-    # Handling a non existent file
-    try:
-        file_name = open("stored_objects.json", 'r')
-    except:
-        file_name = open("stored_objects.json", 'x')
-        #save_object("origin", 90, 90, list_of_saved_objects) #need to take list of saved objects out of function call
-
-    # Handling an empty file
-    #TODO: change to if satement or except for only the expected exception
-    try:
-        new_list_of_dicts = json.load(file_name)
-    except:
-        return [{}]
-
-    file_name.close()
-    return new_list_of_dicts
-
-list_of_saved_objects = load_saved_objects()
-
-print(list_of_saved_objects)
-
-user_name = input("name:")
-user_x = input("x-value:")
-user_y = input("y-value:")
-
-list_of_saved_objects = save_object(user_name, user_x, user_y, list_of_saved_objects)
-
+def _sort_dict(items_dict):
+    if items_dict:
+        return {key: val for key, val in sorted(items_dict.items(), key = lambda ele: ele[0])}
+    else:
+        return {}
