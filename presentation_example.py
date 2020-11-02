@@ -1,6 +1,7 @@
 import tkinter as tk
 import time
 import keyboard #py -m pip install keyboard
+import save_load
 #import Phidgets_Controller as phidget_controller
 
 class laser_guides:
@@ -17,7 +18,7 @@ class laser_guides:
         self.addbutton = tk.Button(master, text='Add Item', command=self.add_item, font=("Arial", 30))
         self.exitbutton = tk.Button(master, text='Exit', command=master.destroy, font=("Arial", 30))
         ############### hardcoded for testing
-        self.mappings = {"apple": {"x": 4.86, "y": 2.3}, "banana": {"x": 2.2, "y": -.15}}
+        self.mappings = all_items
         ###############
         
         
@@ -92,13 +93,21 @@ class laser_guides:
         #1) get current position
         #2) add degrees*sensitivity
     """
+    
+    #Event for add item button press.
     def add_item(self):
         root1 = tk.Tk()
         add_item_gui = add_item_popup(root1)
         root1.wait_window(root1)
-        #TODO check if root1 closed correctly, then run the change laser
-        #TODO add name, x, y to dictionary
-
+        #Checks if the form was closed correctly.
+        if add_item_gui.closed:
+            #TODO: Get x,y coords. Popup gui.
+            x = 5
+            y = 5
+            name = add_item_gui.name
+            all_items[name] = {'x': x, 'y': y}
+            self.mappings = all_items
+            self.listbox_update(self.mappings)
     # Event for search bar
     def on_keyrelease(self, event):
         # Get text from search bar
@@ -144,7 +153,7 @@ class add_item_popup:
     def __init__(self, master):
         self.master = master
         #self.wm_title("Add New Item")
-        #self.geometry("300x300")
+        master.geometry("400x400")
         
         self.closed=False
         
@@ -152,15 +161,19 @@ class add_item_popup:
         self.name_label.place(relx=.1, rely=.15, relwidth=.25, relheight=.15)
         
         self.name_input = tk.Entry(master, font=("Arial", 20))
-        self.name_input.place(relx=.375,rely=.15,relwidth=.5,relheight=.15)
+        self.name_input.place(relx=.355,rely=.15,relwidth=.5,relheight=.15)
         
         self.final_button = tk.Button(master, command=self.select_location, text="Select Location", font=("Arial", 20))
-        self.final_button.place(relx= .35, rely=.75, relwidth=.3, relheight=.2)
+        self.final_button.place(relx= .25, rely=.75, relwidth=.5, relheight=.2)
+    
+    #Event for select location button press
     def select_location(self):
         self.name = self.name_input.get()
         self.closed=True
         self.master.destroy()
 
+start_menu = save_load.StartMenu()
+all_items = start_menu.load(file_name='master_save_file')
 root = tk.Tk()
 my_gui = laser_guides(root)
 root.mainloop()
