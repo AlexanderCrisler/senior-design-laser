@@ -1,4 +1,6 @@
 import tkinter as tk
+import time
+import keyboard #py -m pip install keyboard
 
 class laser_guides:
     def __init__(self, master):
@@ -25,6 +27,66 @@ class laser_guides:
         self.listbox_update(self.mappings)
         self.entry.bind("<KeyRelease>", self.on_keyrelease)
         self.listbox.bind('<<ListboxSelect>>', self.on_select)
+
+        self.master.bind("<Key>", self.keypressed)
+
+    def keypressed(self, event):
+        #print(event.keysym)
+        
+
+        #key = event.keysym
+        start = time.time()
+        sensitivity = 0
+        
+        # ARROWKEY Directional Controls
+        while keyboard.is_pressed('up'):
+            current = time.time()
+            sensitivity = current - start + 1
+            print(f'up {sensitivity}')
+        while keyboard.is_pressed('left'):
+            current = time.time()
+            sensitivity = current - start + 1
+            print(f'left {sensitivity}')
+        while keyboard.is_pressed('down'):
+            current = time.time()
+            sensitivity = current - start + 1
+            print(f'down {sensitivity}')
+        while keyboard.is_pressed('right'):
+            current = time.time()
+            sensitivity = current - start + 1
+            print(f'right {sensitivity}')
+        
+        
+        """
+        while event.keysym == 'Up':             #UP
+            current = time.time()
+            sensitivity = current - start
+            print(f'UP {sensitivity}')
+            event.keysym = None       
+            time.sleep(1)   
+        while event.keysym == 'Left':           #LEFT
+            current = time.time()
+            sensitivity = current - start
+            print(f'LEFT {sensitivity}')
+        while event.keysym == 'Down':           #DOWN
+            current = time.time()
+            sensitivity = current - start
+            print(f'DOWN {sensitivity}')
+        while event.keysym == 'Right':           #RIGHT
+            current = time.time()
+            sensitivity = current - start
+            print(f'RIGHT {sensitivity}')
+        sensitivity = 0
+        """
+    """
+    def _sensitivityCt(start):
+        current = time.time()
+
+        sensitivity = current - start
+        #TODO pass sensitivity to keypressed, call jason's funciton
+        #1) get current position
+        #2) add degrees*sensitivity
+    """
 
     # Event for search bar
     def on_keyrelease(self, event):
