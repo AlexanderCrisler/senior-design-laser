@@ -1,8 +1,14 @@
 import tkinter as tk
+<<<<<<< HEAD
 import time
 import keyboard #py -m pip install keyboard
+=======
+#import Phidgets_Controller as phidget_controller
+>>>>>>> b8d13cc737d005d48037c558e26eafc8d1bb23af
 
 class laser_guides:
+    
+
     def __init__(self, master):
         # Widgets to be used
         self.master = master
@@ -11,6 +17,7 @@ class laser_guides:
         self.entry = tk.Entry(master, font="Arial 20")
         self.listbox = tk.Listbox(master, font=("Arial", 20))
         
+        self.addbutton = tk.Button(master, text='Add Item', command=self.add_item, font=("Arial", 30))
         self.exitbutton = tk.Button(master, text='Exit', command=master.destroy, font=("Arial", 30))
         ############### hardcoded for testing
         self.mappings = {"apple": {"x": 4.86, "y": 2.3}, "banana": {"x": 2.2, "y": -.15}}
@@ -22,12 +29,14 @@ class laser_guides:
         self.infobox.place(relx=.45, rely=.1, relwidth=.5, relheight=.5)
         self.entry.place(relx=.01, rely=.05)
         self.exitbutton.place(relx=.55, rely=.8, relwidth=.1, relheight=.05)
-        
+        self.addbutton.place(relx=.75, rely=.8, relwidth=.15, relheight=.05)
+
         # Bindings for widgets
         self.listbox_update(self.mappings)
         self.entry.bind("<KeyRelease>", self.on_keyrelease)
         self.listbox.bind('<<ListboxSelect>>', self.on_select)
 
+<<<<<<< HEAD
         self.master.bind("<Key>", self.keypressed)
 
     def keypressed(self, event):
@@ -87,6 +96,14 @@ class laser_guides:
         #1) get current position
         #2) add degrees*sensitivity
     """
+=======
+    def add_item(self):
+        root1 = tk.Tk()
+        add_item_gui = add_item_popup(root1)
+        root1.wait_window(root1)
+        #TODO check if root1 closed correctly, then run the change laser
+        #TODO add name, x, y to dictionary
+>>>>>>> b8d13cc737d005d48037c558e26eafc8d1bb23af
 
     # Event for search bar
     def on_keyrelease(self, event):
@@ -128,6 +145,27 @@ class laser_guides:
         except:
             print("No value in listbox selected")
 
+
+class add_item_popup:
+    def __init__(self, master):
+        self.master = master
+        #self.wm_title("Add New Item")
+        #self.geometry("300x300")
+        
+        self.closed=False
+        
+        self.name_label = tk.Label(master, text="Name:", font=("Arial", 20))
+        self.name_label.place(relx=.1, rely=.15, relwidth=.25, relheight=.15)
+        
+        self.name_input = tk.Entry(master, font=("Arial", 20))
+        self.name_input.place(relx=.375,rely=.15,relwidth=.5,relheight=.15)
+        
+        self.final_button = tk.Button(master, command=self.select_location, text="Select Location", font=("Arial", 20))
+        self.final_button.place(relx= .35, rely=.75, relwidth=.3, relheight=.2)
+    def select_location(self):
+        self.name = self.name_input.get()
+        self.closed=True
+        self.master.destroy()
 
 root = tk.Tk()
 my_gui = laser_guides(root)
