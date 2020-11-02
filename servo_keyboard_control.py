@@ -93,4 +93,5 @@ def main():
     controller = ServoKeyboardControl()
     controller.keyboard_control()
 
-main()
+if __name__ == '__main__':
+    main()

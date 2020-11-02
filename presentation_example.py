@@ -1,10 +1,7 @@
 import tkinter as tk
-<<<<<<< HEAD
 import time
 import keyboard #py -m pip install keyboard
-=======
 #import Phidgets_Controller as phidget_controller
->>>>>>> b8d13cc737d005d48037c558e26eafc8d1bb23af
 
 class laser_guides:
     
@@ -36,7 +33,6 @@ class laser_guides:
         self.entry.bind("<KeyRelease>", self.on_keyrelease)
         self.listbox.bind('<<ListboxSelect>>', self.on_select)
 
-<<<<<<< HEAD
         self.master.bind("<Key>", self.keypressed)
 
     def keypressed(self, event):
@@ -96,14 +92,12 @@ class laser_guides:
         #1) get current position
         #2) add degrees*sensitivity
     """
-=======
     def add_item(self):
         root1 = tk.Tk()
         add_item_gui = add_item_popup(root1)
         root1.wait_window(root1)
         #TODO check if root1 closed correctly, then run the change laser
         #TODO add name, x, y to dictionary
->>>>>>> b8d13cc737d005d48037c558e26eafc8d1bb23af
 
     # Event for search bar
     def on_keyrelease(self, event):
