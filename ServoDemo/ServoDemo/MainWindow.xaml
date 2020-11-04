@@ -5,9 +5,87 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ServoDemo"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <UniformGrid>
-        
+        Title="A.L.I.S" Height="800" Width="540" WindowStyle="None"  ResizeMode="CanResizeWithGrip" AllowsTransparency="True">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="grdControls">
+            <StackPanel x:Name="stkControls" HorizontalAlignment="Stretch" FlowDirection="RightToLeft" Orientation="Horizontal">
+                <Button x:Name="btnClose" Content="X" FontWeight="Bold" Width="{Binding ElementName=btnMinimize, Path=ActualHeight}"/>
+                <Button x:Name="btnRestore" Width="{Binding ElementName=btnMinimize, Path=ActualHeight}"/>
+                <Button x:Name="btnMinimize" Content="_" FontWeight="Bold" Width="{Binding ElementName=btnMinimize, Path=ActualHeight}" />
+            </StackPanel>
+        </Grid>
 
-    </UniformGrid>
+        <TabControl Grid.Row="1">
+            <TabItem>
+                <TabItem.Header>
+                    <Viewbox>
+                        <StackPanel>
+                            <Image Source="/Icons\Search.png" Height="50"/>
+                            <TextBlock Text="Search" FontSize="30"/>
+                        </StackPanel>
+                    </Viewbox>
+                    
+                    
+                </TabItem.Header>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBox x:Name="txbSearch" FontSize="30"  Width="250"/>
+                        <Button x:Name="btnSearch" Content="Search" FontSize="30" Padding="5"/>
+                    </StackPanel>
+                    
+                    <GroupBox Header="Items" FontSize="20"  Grid.Row="1">
+                        <ListBox x:Name="lbxitems" VerticalAlignment="Stretch" Grid.Row="1" FontSize="30">
+                        </ListBox>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <Viewbox>
+                        <StackPanel>
+                            <Image Source="/Icons\Settings.png" Height="50"/>
+                            <TextBlock Text="Settings" FontSize="30"/>
+                        </StackPanel>
+                    </Viewbox>
+                </TabItem.Header>
+                <ComboBox x:Name="cmbTheme" VerticalAlignment="Top" SelectedIndex="1" HorizontalAlignment="Left" Width="200" FontSize="30">
+                    <ComboBoxItem Content="Default"/>
+                    <ComboBoxItem Content="Dark"/>
+                    <ComboBoxItem Content="Light"/>
+                    <ComboBoxItem Content="Shiny Blue"/>
+                    <ComboBoxItem Content="Shine Red"/>
+                </ComboBox>
+
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <Viewbox>
+                        <StackPanel>
+                            <Image Source="/Icons\Add.png" Height="50"/>
+                            <TextBlock Text="Add items" FontSize="30"/>
+                        </StackPanel>
+                    </Viewbox>
+                </TabItem.Header>
+                <UniformGrid Columns="2" VerticalAlignment="Top">
+                    <TextBlock Text="Name:" HorizontalAlignment="Right" FontSize="30"/>
+                    <TextBox x:Name="txbName" FontSize="30"/>
+                    <!--<TextBlock Text="Horizontal:" HorizontalAlignment="Right" FontSize="30"/>
+                    <TextBox x:Name="txbHori" FontSize="30"/>
+                    <TextBlock Text="Vertical:" HorizontalAlignment="Right" FontSize="30"/>
+                    <TextBox x:Name="txbVert" FontSize="30" />-->
+                    <Button x:Name="btnAdd" Content="Add" FontSize="30"/>
+                </UniformGrid>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
 </Window>

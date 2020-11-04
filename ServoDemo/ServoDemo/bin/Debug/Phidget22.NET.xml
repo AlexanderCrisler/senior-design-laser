@@ -1632,7 +1632,7 @@
         </member>
         <member name="P:Phidget22.DataAdapter.BaudRate">
             <summary> The baud rate to use for future data transfers. </summary>
-            <remarks>The rate at which data is transmitted ofer the communication lines in bits per second.
+            <remarks>The rate at which data is transmitted over the communication lines in bits per second.
             </remarks>
             <exception cref="T:Phidget22.PhidgetException">A Phidget error occurs.</exception>
         </member>
@@ -1670,7 +1670,7 @@
         <member name="P:Phidget22.DataAdapter.DeviceAddress">
             <summary> The address of the device.  </summary>
             <remarks>In SPI Mode, this specifies which CS pin is used to signal the device. In I2C mode, this is used to
-            specify the device address.
+            specify the device address. This is not used in UART mode.
             </remarks>
             <exception cref="T:Phidget22.PhidgetException">A Phidget error occurs.</exception>
         </member>
@@ -8146,6 +8146,9 @@
         <member name="F:Phidget22.ErrorEventCode.InvalidStateCondition">
             <summary> Invalid state detected. </summary>
         </member>
+        <member name="F:Phidget22.ErrorEventCode.BadConnectionCondition">
+            <summary> Bad connection detected. </summary>
+        </member>
         <member name="T:Phidget22.DeviceID">
             <summary>Phidget device ID
             </summary>
@@ -9636,6 +9639,15 @@
         </member>
         <member name="F:Phidget22.VoltageSensorType.PN_3589">
             <summary> 3589 - +-250A DC Current Transducer </summary>
+        </member>
+        <member name="F:Phidget22.VoltageSensorType.PN_MOT2002_LOW">
+            <summary> MOT2002 - Motion Sensor Low Sensitivity </summary>
+        </member>
+        <member name="F:Phidget22.VoltageSensorType.PN_MOT2002_MED">
+            <summary> MOT2002 - Motion Sensor Medium Sensitivity </summary>
+        </member>
+        <member name="F:Phidget22.VoltageSensorType.PN_MOT2002_HIGH">
+            <summary> MOT2002 - Motion Sensor High Sensitivity </summary>
         </member>
         <member name="T:Phidget22.VoltageOutputRange">
             <summary>The selected output voltage range
