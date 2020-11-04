@@ -102,10 +102,12 @@ class laser_guides:
         #Checks if the form was closed correctly.
         if add_item_gui.closed:
             #TODO: Get x,y coords. Popup gui.
-            x = 5
-            y = 5
+            
+            root2 = tk.Tk()
+            select_location_gui = move_laser_popup(root2)
+            root2.wait_window(root2)
             name = add_item_gui.name
-            all_items[name] = {'x': x, 'y': y}
+            all_items[name] = {'x': select_location_gui.x, 'y': select_location_gui.y}
             self.mappings = all_items
             self.listbox_update(self.mappings)
     # Event for search bar
@@ -152,7 +154,7 @@ class laser_guides:
 class add_item_popup:
     def __init__(self, master):
         self.master = master
-        #self.wm_title("Add New Item")
+        master.title("Add New Item")
         master.geometry("400x400")
         
         self.closed=False
@@ -172,6 +174,48 @@ class add_item_popup:
         self.closed=True
         self.master.destroy()
 
+class move_laser_popup:
+    def __init__(self, master):
+        self.master = master
+        master.title("Select Laser Location")
+        master.geometry("400x400")
+        
+        self.closed=False
+        self.x = 0
+        self.y = 0
+        
+        
+        self.left_button = tk.Button(master, command=self.left_button_click, text="<", font=("Arial", 20))
+        self.left_button.place(relx=0, rely=.2, relwidth=.2, relheight=.6)
+        
+        self.right_button = tk.Button(master, command=self.right_button_click, text=">", font=("Arial", 20))
+        self.right_button.place(relx=.8, rely=.2, relwidth=.2, relheight=.6)
+        
+        self.up_button = tk.Button(master, command=self.up_button_click, text="/\\" font=("Arial", 20))
+        self.up_button.place(relx=.2, rely=0, relwidth=.6, relheight=.2)
+        
+        self.down_button = tk.Button(master, command=self.down_button_click, text="\\/", font=("Arial", 20))
+        self.down_button.place(relx=.2, rely=.8, relwidth=.6, relheight=.2)
+        
+        self.set_button = tk.Button(master, command=self.set_location, text="Set", font=("Arial", 20))
+        self.set_button.place(relx=.35, rely=.35, relwidth=.3, relheight=.3)
+        
+    def left_button_click(self):
+        self.x = self.x - 1
+    
+    def right_button_click(self):
+        self.x = self.x + 1
+        
+    def up_button_click(self):
+        self.y = self.x + 1
+        
+    def down_button_click(self):
+        self.y = self.x - 1
+    
+    def set_location(self):
+        self.closed=True
+        self.master.destroy()
+        
 start_menu = save_load.StartMenu()
 all_items = start_menu.load(file_name='master_save_file')
 root = tk.Tk()
