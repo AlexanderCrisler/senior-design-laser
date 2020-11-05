@@ -18,6 +18,12 @@ class LaserSystem:
 		self.__ServoVertical.setChannel(1)
 		self.__ServoVertical.openWaitForAttachment(5000)
 		self.__ServoHorizontal.openWaitForAttachment(5000)
+		time.sleep(1)
+		self.__ServoVertical.setTargetPosition(0)
+		self.__ServoHorizontal.setTargetPosition(0)
+		time.sleep(1)
+		self.__ServoVertical.setEngaged(True)
+		self.__ServoHorizontal.setEngaged(True)
 
 
 	def SetPosition(self,HorizontalAngle,VerticalAngle):
