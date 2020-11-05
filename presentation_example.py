@@ -71,25 +71,25 @@ class laser_guides:
             current = time.time()
             sensitivity = current - start + 1
             #print(f'up {sensitivity}')
-            phidgets_ctlr.move_servo_position(x_dir=Direction.NA, y_dir=Direction.Positive, sensitivity=100)
+            phidgets_ctlr.move_servo_position(x_dir=Direction.NA, y_dir=Direction.Positive, sensitivity=sensitivity)
 
         while keyboard.is_pressed('left'):
             current = time.time()
             sensitivity = current - start + 1
             #print(f'left {sensitivity}')
-            phidgets_ctlr.move_servo_position(x_dir=Direction.Negative, y_dir=Direction.NA, sensitivity=100)
+            phidgets_ctlr.move_servo_position(x_dir=Direction.Negative, y_dir=Direction.NA, sensitivity=sensitivity)
 
         while keyboard.is_pressed('down'):
             current = time.time()
             sensitivity = current - start + 1
             #print(f'down {sensitivity}')
-            phidgets_ctlr.move_servo_position(x_dir=Direction.NA, y_dir=Direction.Negative, sensitivity=100)
+            phidgets_ctlr.move_servo_position(x_dir=Direction.NA, y_dir=Direction.Negative, sensitivity=sensitivity)
 
         while keyboard.is_pressed('right'):
             current = time.time()
             sensitivity = current - start + 1
             #print(f'right {sensitivity}')
-            phidgets_ctlr.move_servo_position(x_dir=Direction.Positive, y_dir=Direction.NA, sensitivity=100)
+            phidgets_ctlr.move_servo_position(x_dir=Direction.Positive, y_dir=Direction.NA, sensitivity=sensitivity)
 
     
     #Event for add item button press.
@@ -113,6 +113,7 @@ class laser_guides:
     def delete_item(self):
         selected = self.listbox.curselection()
         all_items.pop(selected)
+        self.mappings= all_items
         start_menu.save(file_name='master_save_file')
         self.listbox_update(self.mappings)
     
