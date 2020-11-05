@@ -1,7 +1,13 @@
-
 from Phidget22.Phidget import *
 from Phidget22.Devices.RCServo import *
+import enum
 import time
+
+
+class Direction(enum.Enum):
+    Positive=1
+    Negative=-1
+    NA=0
 
 
 class LaserSystem:
@@ -25,19 +31,18 @@ class LaserSystem:
 			time.sleep(.1)
 
 
-	def move_servo_position(self, x_dir=0, y_dir=0, sensitivity=1):
-		# x_dir and y_dir should be set to -1, 0 , 1 depending on their direction
-		if (x_pos == -1 or x_pos == 0 or x_pos == 1) and (y_pos == -1 or y_pos == 0 or y_pos == 1):
-			x_pos = self.__ServoHorizontal.getTargetPosition() + x_dir * .01 * sensitivity
+	def move_servo_position(self, x_dir=Direction.NA, y_dir=Direction.NA, sensitivity=1):
+        # x_dir and y_dir should be set to -1, 0 , 1 depending on their direction
+        x_pos = self.__ServoHorizontal.getTargetPosition() + x_dir.value * .01 * sensitivity
 
-			y_pos = self.__ServoVertical.getTargetPosition() + y_dir * .01 * sensitivity
+        y_pos = self.__ServoVertical.getTargetPosition() + y_dir.value * .01 * sensitivity
 
-			SetPosition(x_pos, y_pos)
-			print(Get_Angle())
+        self.SetPosition(x_pos, y_pos)
+        print(self.Get_Angle())
 
 	
-	def Get_TargetPosition(self)
-		return[self.__ServoHorizontal.getTargetPosition(), self.__ServoVertical.getTargetPosition()]
+	def Get_TargetPosition(self):
+		return [self.__ServoHorizontal.getTargetPosition(), self.__ServoVertical.getTargetPosition()]
 
 
 	def Get_Angle(self):
