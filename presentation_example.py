@@ -111,13 +111,10 @@ class laser_guides:
                 start_menu.save(file_name='master_save_file')
 
     def delete_item(self):
-        try:
-            selected = self.listbox.curselection()
-            del self.mappings[selected]
-            start_menu.save(file_name='master_save_file')
-            self.listbox_update(self.mappings)
-        except:
-            print("No value in listbox selected")
+        selected = self.listbox.curselection()
+        del self.mappings[selected]
+        start_menu.save(file_name='master_save_file')
+        self.listbox_update(self.mappings)
     
     # Event for search bar
     def on_keyrelease(self, event):
@@ -222,7 +219,7 @@ class move_laser_popup:
     
     def set_location(self):
         self.closed=True
-        position = phidgets_controller.Get_TargetPosition()
+        position = phidgets_ctlr.Get_TargetPosition()
         self.horizontal = position[0]
         self.vertical = position[1]
         self.master.destroy()
