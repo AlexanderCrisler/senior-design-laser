@@ -36,6 +36,7 @@ class LaserSystem:
 		x_pos = self.__ServoHorizontal.getTargetPosition() + x_dir.value * .01 * sensitivity
 
 		y_pos = self.__ServoVertical.getTargetPosition() + y_dir.value * .01 * sensitivity
+		time.sleep(1)
 
 		self.SetPosition(x_pos, y_pos)
 		print(self.Get_Angle())
