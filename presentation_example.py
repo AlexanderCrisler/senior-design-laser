@@ -32,31 +32,37 @@ class laser_guides:
         # Widgets to be used
         self.master = master
         master.attributes('-fullscreen', True)
-        self.infobox = tk.Label(master, font=("Arial", 20))
-        self.entry = tk.Entry(master, font="Arial 20")
-        self.listbox = tk.Listbox(master, font=("Arial", 20))
+        self.infobox = tk.Label(master, font=("Arial", 20), bg="dark slate gray", fg="white")
+        self.entry = tk.Entry(master, font="Arial 20", bg="dark slate gray", fg="white", textvariable="Search")
+        self.listbox = tk.Listbox(master, font=("Arial", 20), fg="white", bg="dark slate gray",
+                                  highlightcolor="black", selectbackground="gray", selectforeground="black",
+                                  highlightbackground="black")
         
-        self.addbutton = tk.Button(master, text='Add Item', command=self.add_item, font=("Arial", 30))
-        self.exitbutton = tk.Button(master, text='Exit', command=master.destroy, font=("Arial", 30))
-        self.deletebutton = tk.Button(master, text='Delete', command=self.delete_item, font=("Arial", 30))
+        self.addbutton = tk.Button(master, text='Add Item', command=self.add_item, font=("Arial", 30),
+                                   fg="yellow", bg="dark slate gray")
+        self.exitbutton = tk.Button(master, text='Exit', command=master.destroy, font=("Arial", 30),
+                                    fg="yellow", bg="dark slate gray")
+        self.deletebutton = tk.Button(master, text='Delete', command=self.delete_item, font=("Arial", 30),
+                                      fg="yellow", bg="dark slate gray")
         ############### hardcoded for testing
         self.mappings = all_items
         ###############
         
         
         # Widgets placement
-        self.listbox.place(relx=.01, rely=.1, relwidth=.4, relheight=.7)
-        self.infobox.place(relx=.45, rely=.1, relwidth=.5, relheight=.5)
-        self.entry.place(relx=.01, rely=.05)
-        self.deletebutton.place(relx=.55, rely=.8, relwidth=.1, relheight=.05)
-        self.addbutton.place(relx=.75, rely=.8, relwidth=.15, relheight=.05)
+        self.listbox.place(relx=0, rely=.16, relwidth=.7, relheight=.8)
+        self.infobox.place(relx=.71, rely=.16, relwidth=.29, relheight=.8)
+        self.entry.place(relx=0, rely=.1, relwidth=.699)
         self.exitbutton.place(relx=.9, rely=0, relwidth=.1, relheight=.05)
+        self.addbutton.place(relx=.1, rely=0, relwidth=.1, relheight=.1)
+        self.deletebutton.place(relx=.2, rely=0, relwidth=.1, relheight=.1)
+        self.scrollbar.pack(side="right", fill="y")
         
         # Bindings for widgets
         self.listbox_update(self.mappings)
         self.entry.bind("<KeyRelease>", self.on_keyrelease)
         self.listbox.bind('<<ListboxSelect>>', self.on_select)
-
+        self.scrollbar.config(command=self.listbox.yview)
         self.master.bind("<Key>", self.keypressed)
 
     
