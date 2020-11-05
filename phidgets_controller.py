@@ -18,6 +18,12 @@ class LaserSystem:
 		self.__ServoVertical.setChannel(1)
 		self.__ServoVertical.openWaitForAttachment(5000)
 		self.__ServoHorizontal.openWaitForAttachment(5000)
+		time.sleep(1)
+		self.__ServoVertical.setTargetPosition(0)
+		self.__ServoHorizontal.setTargetPosition(0)
+		time.sleep(1)
+		self.__ServoVertical.setEngaged(True)
+		self.__ServoHorizontal.setEngaged(True)
 
 
 	def SetPosition(self,HorizontalAngle,VerticalAngle):
@@ -33,12 +39,17 @@ class LaserSystem:
 
 	def move_servo_position(self, x_dir=Direction.NA, y_dir=Direction.NA, sensitivity=1):
 		# x_dir and y_dir should be set to -1, 0 , 1 depending on their direction
-		x_pos = self.__ServoHorizontal.getTargetPosition() + x_dir.value * .01 * sensitivity
+		if self.__ServoHorizontal.getTargetPosition() > self.__ServoHorizontal.getMinPosition() 
+		and self.__ServoHorizontal.getTargetPosition() < self.__ServoHorizontal.getMaxPosition()
+		and self.__ServoVertical.getTargetPosition() > self.__ServoVertical.getMinPosition()
+		and self.__ServoVertical.getTargetPosition() < self.__ServoVertical.getMaxPosition():
+			x_pos = self.__ServoHorizontal.getTargetPosition() + x_dir.value * .01 * sensitivity
 
-		y_pos = self.__ServoVertical.getTargetPosition() + y_dir.value * .01 * sensitivity
+			y_pos = self.__ServoVertical.getTargetPosition() + y_dir.value * .01 * sensitivity
+			time.sleep(1)
 
-		self.SetPosition(x_pos, y_pos)
-		print(self.Get_Angle())
+			self.SetPosition(x_pos, y_pos)
+			print(self.Get_Angle())
 
 	
 	def Get_TargetPosition(self):
