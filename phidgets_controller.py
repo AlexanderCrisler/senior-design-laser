@@ -6,8 +6,8 @@ import time
 
 class LaserSystem:
 	def __init__(self):
-		self.__ServoVertical= RCServo()
-		self.__ServoHorizontal= RCServo()
+		self.__ServoVertical = RCServo()
+		self.__ServoHorizontal = RCServo()
 		self.__ServoHorizontal.setChannel(0)
 		self.__ServoVertical.setChannel(1)
 		self.__ServoVertical.openWaitForAttachment(5000)
@@ -23,6 +23,17 @@ class LaserSystem:
 			#print(int(CurrentServo.getPosition()))
 			#print(int(CurrentServo.getTargetPosition()))
 			time.sleep(.1)
+
+
+	def move_servo_position(self, x_dir=0, y_dir=0, sensitivity=1):
+		# x_dir and y_dir should be set to -1, 0 , 1 depending on their direction
+		if (x_pos == -1 or x_pos == 0 or x_pos == 1) and (y_pos == -1 or y_pos == 0 or y_pos == 1):
+			x_pos = self.__ServoHorizontal.getTargetPosition() + x_dir * .01 * sensitivity
+
+			y_pos = self.__ServoVertical.getTargetPosition() + y_dir * .01 * sensitivity
+
+			SetPosition(x_pos, y_pos)
+			print(Get_Angle())
 
 	
 	def Get_TargetPosition(self)
