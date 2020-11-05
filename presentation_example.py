@@ -154,6 +154,7 @@ class laser_guides:
             item = event.widget.get(event.widget.curselection())
             dict_item = self.mappings[item]
             self.infobox['text'] = (item + "\nHorizontal coordinate: " + str(dict_item['horizontal']) + "\nVertical coordinate: " + str(dict_item['vertical']) + "\n")
+            phidgets_ctlr.SetPosition(HorizontalAngle=self.mappings[item]['horizontal'],VerticalAngle=self.mappings[item]['vertical'])
         except:
             print("No value in listbox selected")
 
