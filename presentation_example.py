@@ -69,7 +69,7 @@ class laser_guides:
         # ARROWKEY Directional Controls
         while keyboard.is_pressed('up'):
             current = time.time()
-            sensitivity = current - start + 1
+            #sensitivity = current - start + 1
             #print(f'up {sensitivity}')
             phidgets_ctlr.move_servo_position(x_dir=Direction.NA, y_dir=Direction.Positive, sensitivity=100)
 
@@ -113,6 +113,7 @@ class laser_guides:
     def delete_item(self):
         selected = self.listbox.curselection()
         all_items.pop(selected)
+        self.mappings= all_items
         start_menu.save(file_name='master_save_file')
         self.listbox_update(self.mappings)
     
