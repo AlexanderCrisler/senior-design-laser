@@ -70,25 +70,25 @@ class laser_guides:
             current = time.time()
             sensitivity = current - start + 1
             #print(f'up {sensitivity}')
-            phidgets_ctlr.move_servo_position(x_dir=0, y_dir=1, sensitivity=sensitivity)
+            phidgets_ctlr.move_servo_position(x_dir=Direction.NA, y_dir=Direction.Positive, sensitivity=100)
 
         while keyboard.is_pressed('left'):
             current = time.time()
             sensitivity = current - start + 1
             #print(f'left {sensitivity}')
-            phidgets_ctlr.move_servo_position(x_dir=-1, y_dir=0, sensitivity=sensitivity)
+            phidgets_ctlr.move_servo_position(x_dir=Direction.Negative, y_dir=Direction.NA, sensitivity=100)
 
         while keyboard.is_pressed('down'):
             current = time.time()
             sensitivity = current - start + 1
             #print(f'down {sensitivity}')
-            phidgets_ctlr.move_servo_position(x_dir=0, y_dir=-1, sensitivity=sensitivity)
+            phidgets_ctlr.move_servo_position(x_dir=Direction.NA, y_dir=Direction.Negative, sensitivity=100)
 
         while keyboard.is_pressed('right'):
             current = time.time()
             sensitivity = current - start + 1
             #print(f'right {sensitivity}')
-            phidgets_ctlr.move_servo_position(x_dir=1, y_dir=0, sensitivity=sensitivity)
+            phidgets_ctlr.move_servo_position(x_dir=Direction.Positive, y_dir=Direction.NA, sensitivity=100)
 
     
     #Event for add item button press.
@@ -208,16 +208,16 @@ class move_laser_popup:
         self.set_button.place(relx=.35, rely=.35, relwidth=.3, relheight=.3)
         
     def left_button_click(self):
-        phidgets_ctlr.move_servo_position(x_dir=-1, y_dir=0, sensitivity=100)
+        phidgets_ctlr.move_servo_position(x_dir=Direction.Negative, y_dir=Direction.NA, sensitivity=100)
     
     def right_button_click(self):
-        phidgets_ctlr.move_servo_position(x_dir=1, y_dir=0, sensitivity=100)
+        phidgets_ctlr.move_servo_position(x_dir=Direction.Positive, y_dir=Direction.NA, sensitivity=100)
         
     def up_button_click(self):
-        phidgets_ctlr.move_servo_position(x_dir=0, y_dir=1, sensitivity=100)
+        phidgets_ctlr.move_servo_position(x_dir=Direction.NA, y_dir=Direction.Positive, sensitivity=100)
         
     def down_button_click(self):
-        phidgets_ctlr.move_servo_position(x_dir=0, y_dir=-1, sensitivity=100)
+        phidgets_ctlr.move_servo_position(x_dir=Direction.NA, y_dir=Direction.Negative, sensitivity=100)
     
     def set_location(self):
         self.closed=True
