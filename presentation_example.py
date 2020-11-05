@@ -112,7 +112,7 @@ class laser_guides:
 
     def delete_item(self):
         selected = self.listbox.curselection()
-        del self.mappings[selected]
+        all_items.pop(selected)
         start_menu.save(file_name='master_save_file')
         self.listbox_update(self.mappings)
     
