@@ -24,9 +24,13 @@ class LaserSystem:
 			#print(int(CurrentServo.getTargetPosition()))
 			time.sleep(.1)
 
+	
+	def Get_TargetPosition(self)
+		return[self.__ServoHorizontal.getTargetPosition(), self.__ServoVertical.getTargetPosition()]
+
 
 	def Get_Angle(self):
-		return [self.__ServoHorizontal.getPosition(),self.__ServoVertical.getPosition()]
+		return [self.__ServoHorizontal.getPosition(), self.__ServoVertical.getPosition()]
 
 
 def main():

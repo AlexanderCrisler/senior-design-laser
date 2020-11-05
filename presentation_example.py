@@ -2,11 +2,29 @@ import tkinter as tk
 import time
 import keyboard #py -m pip install keyboard
 import save_load
-#import Phidgets_Controller as phidget_controller
+
+from phidgets_controller import LaserSystem
+
+phidgets_ctlr = LaserSystem()
+
+def move_servo_position(x_dir, y_dir, sensitivity=1):
+    if x_dir == 1:
+        x_pos = phidgets_ctlr.Get_TargetPosition()[0] + (.01 * sensitivity)
+    elif x_dir == -1:
+        x_pos = phidgets_ctlr.Get_TargetPosition()[0] - (.01 * sensitivity)
+
+    if y_dir == 1:
+        y_pos = phidgets_ctlr.Get_TargetPosition()[1] + (.01 * sensitivity)
+    elif y_dir == -1:
+        y_pos = phidgets_ctlr.Get_TargetPosition()[1] - (.01 * sensitivity)
+
+    phidgets_ctlr.SetPosition(x_pos, y_pos)
+    print(phidgets_ctlr.Get_Angle())
+
+def set_servo_position(x_pos, y_pos):
+    phidgets_ctlr.SetPosition(x_pos, y_pos)
 
 class laser_guides:
-    
-
     def __init__(self, master):
         # Widgets to be used
         self.master = master
@@ -36,63 +54,38 @@ class laser_guides:
 
         self.master.bind("<Key>", self.keypressed)
 
+    
+    # Tracking the keys pressed
     def keypressed(self, event):
         #print(event.keysym)
-        
-
-        #key = event.keysym
         start = time.time()
-        sensitivity = 0
-        
+        sensitivity = 0      # Sensitivity of the laser movement
+
         # ARROWKEY Directional Controls
         while keyboard.is_pressed('up'):
             current = time.time()
             sensitivity = current - start + 1
-            print(f'up {sensitivity}')
+            #print(f'up {sensitivity}')
+            move_servo_position(x_dir=0, y_dir=1, sensitivity=sensitivity)
+
         while keyboard.is_pressed('left'):
             current = time.time()
             sensitivity = current - start + 1
-            print(f'left {sensitivity}')
+            #print(f'left {sensitivity}')
+            move_servo_position(x_dir=-1, y_dir=0, sensitivity=sensitivity)
+
         while keyboard.is_pressed('down'):
             current = time.time()
             sensitivity = current - start + 1
-            print(f'down {sensitivity}')
+            #print(f'down {sensitivity}')
+            move_servo_position(x_dir=0, y_dir=-1, sensitivity=sensitivity)
+
         while keyboard.is_pressed('right'):
             current = time.time()
             sensitivity = current - start + 1
-            print(f'right {sensitivity}')
-        
-        
-        """
-        while event.keysym == 'Up':             #UP
-            current = time.time()
-            sensitivity = current - start
-            print(f'UP {sensitivity}')
-            event.keysym = None       
-            time.sleep(1)   
-        while event.keysym == 'Left':           #LEFT
-            current = time.time()
-            sensitivity = current - start
-            print(f'LEFT {sensitivity}')
-        while event.keysym == 'Down':           #DOWN
-            current = time.time()
-            sensitivity = current - start
-            print(f'DOWN {sensitivity}')
-        while event.keysym == 'Right':           #RIGHT
-            current = time.time()
-            sensitivity = current - start
-            print(f'RIGHT {sensitivity}')
-        sensitivity = 0
-        """
-    """
-    def _sensitivityCt(start):
-        current = time.time()
+            #print(f'right {sensitivity}')
+            move_servo_position(x_dir=1, y_dir=0, sensitivity=sensitivity)
 
-        sensitivity = current - start
-        #TODO pass sensitivity to keypressed, call jason's funciton
-        #1) get current position
-        #2) add degrees*sensitivity
-    """
     
     #Event for add item button press.
     def add_item(self):
@@ -110,6 +103,8 @@ class laser_guides:
             all_items[name] = {'x': select_location_gui.x, 'y': select_location_gui.y}
             self.mappings = all_items
             self.listbox_update(self.mappings)
+
+
     # Event for search bar
     def on_keyrelease(self, event):
         # Get text from search bar
@@ -139,6 +134,7 @@ class laser_guides:
         # Inserts items in to listbox
         for item in data:
             self.listbox.insert('end', item)
+
 
     # Event for clicking on item in listbox
     def on_select(self, event):
@@ -191,7 +187,7 @@ class move_laser_popup:
         self.right_button = tk.Button(master, command=self.right_button_click, text=">", font=("Arial", 20))
         self.right_button.place(relx=.8, rely=.2, relwidth=.2, relheight=.6)
         
-        self.up_button = tk.Button(master, command=self.up_button_click, text="/\\" font=("Arial", 20))
+        self.up_button = tk.Button(master, command=self.up_button_click, text="/\\", font=("Arial", 20))
         self.up_button.place(relx=.2, rely=0, relwidth=.6, relheight=.2)
         
         self.down_button = tk.Button(master, command=self.down_button_click, text="\\/", font=("Arial", 20))
