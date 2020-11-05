@@ -37,6 +37,7 @@ class laser_guides:
         
         self.addbutton = tk.Button(master, text='Add Item', command=self.add_item, font=("Arial", 30))
         self.exitbutton = tk.Button(master, text='Exit', command=master.destroy, font=("Arial", 30))
+        self.deletebutton = tk.Button(master, text='Delete', command=self.delete_item, font=("Arial", 30))
         ############### hardcoded for testing
         self.mappings = all_items
         ###############
@@ -46,9 +47,10 @@ class laser_guides:
         self.listbox.place(relx=.01, rely=.1, relwidth=.4, relheight=.7)
         self.infobox.place(relx=.45, rely=.1, relwidth=.5, relheight=.5)
         self.entry.place(relx=.01, rely=.05)
-        self.exitbutton.place(relx=.55, rely=.8, relwidth=.1, relheight=.05)
+        self.deletebutton.place(relx=.55, rely=.8, relwidth=.1, relheight=.05)
         self.addbutton.place(relx=.75, rely=.8, relwidth=.15, relheight=.05)
-
+        self.exitbutton.place(relx=.9, rely=0, relwidth=.1, relheight=.05)
+        
         # Bindings for widgets
         self.listbox_update(self.mappings)
         self.entry.bind("<KeyRelease>", self.on_keyrelease)
@@ -101,12 +103,21 @@ class laser_guides:
             root2 = tk.Tk()
             select_location_gui = move_laser_popup(root2)
             root2.wait_window(root2)
-            name = add_item_gui.name
-            all_items[name] = {'x': select_location_gui.x, 'y': select_location_gui.y}
-            self.mappings = all_items
+            if select_location_gui.closed:
+                all_items[add_item_gui.name] = {'horizontal': select_location_gui.horizontal, 'vertical': select_location_gui.vertical}
+                self.mappings = all_items
+                self.listbox_update(self.mappings)
+                start_menu.save(file_name='master_save_file')
+
+    def delete_item(self):
+        try:
+            selected = event.widget.get(event.widget.curselection())
+            del self.mappings[selected]
+            start_menu.save(file_name='master_save_file')
             self.listbox_update(self.mappings)
-
-
+        except:
+            print("No value in listbox selected")
+    
     # Event for search bar
     def on_keyrelease(self, event):
         # Get text from search bar
@@ -144,7 +155,7 @@ class laser_guides:
         try:
             item = event.widget.get(event.widget.curselection())
             dict_item = self.mappings[item]
-            self.infobox['text'] = (item + "\nx coordinate: " + str(dict_item["x"]) + "\ny coordinate: " + str(dict_item["y"]) + "\n")
+            self.infobox['text'] = (item + "\nHorizontal coordinate: " + str(dict_item['horizontal']) + "\nVertical coordinate: " + str(dict_item['vertical']) + "\n")
         except:
             print("No value in listbox selected")
 
@@ -179,8 +190,6 @@ class move_laser_popup:
         master.geometry("400x400")
         
         self.closed=False
-        self.x = 0
-        self.y = 0
         
         
         self.left_button = tk.Button(master, command=self.left_button_click, text="<", font=("Arial", 20))
@@ -199,23 +208,22 @@ class move_laser_popup:
         self.set_button.place(relx=.35, rely=.35, relwidth=.3, relheight=.3)
         
     def left_button_click(self):
-        self.x = self.x - 1
         phidgets_ctlr.move_servo_position(x_dir=-1, y_dir=0, sensitivity=100)
     
     def right_button_click(self):
-        self.x = self.x + 1
         phidgets_ctlr.move_servo_position(x_dir=1, y_dir=0, sensitivity=100)
         
     def up_button_click(self):
-        self.y = self.y + 1
         phidgets_ctlr.move_servo_position(x_dir=0, y_dir=1, sensitivity=100)
         
     def down_button_click(self):
-        self.y = self.y - 1
         phidgets_ctlr.move_servo_position(x_dir=0, y_dir=-1, sensitivity=100)
     
     def set_location(self):
         self.closed=True
+        position = phidgets_controller.Get_TargetPosition()
+        self.horizontal = position[0]
+        self.vertical = position[1]
         self.master.destroy()
         
 start_menu = save_load.StartMenu()
