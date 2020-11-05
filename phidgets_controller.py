@@ -5,9 +5,9 @@ import time
 
 
 class Direction(enum.Enum):
-    Positive=1
-    Negative=-1
-    NA=0
+	Positive=1
+	Negative=-1
+	NA=0
 
 
 class LaserSystem:
@@ -32,13 +32,13 @@ class LaserSystem:
 
 
 	def move_servo_position(self, x_dir=Direction.NA, y_dir=Direction.NA, sensitivity=1):
-        # x_dir and y_dir should be set to -1, 0 , 1 depending on their direction
-        x_pos = self.__ServoHorizontal.getTargetPosition() + x_dir.value * .01 * sensitivity
+		# x_dir and y_dir should be set to -1, 0 , 1 depending on their direction
+		x_pos = self.__ServoHorizontal.getTargetPosition() + x_dir.value * .01 * sensitivity
 
-        y_pos = self.__ServoVertical.getTargetPosition() + y_dir.value * .01 * sensitivity
+		y_pos = self.__ServoVertical.getTargetPosition() + y_dir.value * .01 * sensitivity
 
-        self.SetPosition(x_pos, y_pos)
-        print(self.Get_Angle())
+		self.SetPosition(x_pos, y_pos)
+		print(self.Get_Angle())
 
 	
 	def Get_TargetPosition(self):
@@ -62,4 +62,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+	main()
