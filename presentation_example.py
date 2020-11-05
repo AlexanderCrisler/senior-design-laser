@@ -4,6 +4,7 @@ import keyboard #py -m pip install keyboard
 import save_load
 
 from phidgets_controller import LaserSystem
+from phidgets_controller import Direction
 
 phidgets_ctlr = LaserSystem()
 
