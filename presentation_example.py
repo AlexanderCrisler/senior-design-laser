@@ -56,13 +56,13 @@ class laser_guides:
         self.exitbutton.place(relx=.9, rely=0, relwidth=.1, relheight=.05)
         self.addbutton.place(relx=.1, rely=0, relwidth=.1, relheight=.1)
         self.deletebutton.place(relx=.2, rely=0, relwidth=.1, relheight=.1)
-        self.scrollbar.pack(side="right", fill="y")
+        #self.scrollbar.pack(side="right", fill="y")
         
         # Bindings for widgets
         self.listbox_update(self.mappings)
         self.entry.bind("<KeyRelease>", self.on_keyrelease)
         self.listbox.bind('<<ListboxSelect>>', self.on_select)
-        self.scrollbar.config(command=self.listbox.yview)
+        #self.scrollbar.config(command=self.listbox.yview)
         self.master.bind("<Key>", self.keypressed)
 
     
