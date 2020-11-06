@@ -86,12 +86,12 @@ class laser_guides:
                 all_items[add_item_gui.name] = {'horizontal': select_location_gui.horizontal, 'vertical': select_location_gui.vertical}
                 self.mappings = all_items
                 self.listbox_update(self.mappings)
-                start_menu.save(file_name='master_save_file')
+                start_menu.save(items=all_items, file_name='master_save_file')
 
     def delete_item(self):
         selected = self.listbox.get(self.listbox.curselection())
         del self.mappings[selected]
-        start_menu.save(file_name='master_save_file')
+        start_menu.save(items=all_items, file_name='master_save_file')
         self.listbox_update(self.mappings)
     
     # Event for search bar
