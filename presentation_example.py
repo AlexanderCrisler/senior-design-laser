@@ -75,25 +75,25 @@ class laser_guides:
         # ARROWKEY Directional Controls
         while keyboard.is_pressed('up'):
             current = time.time()
-            sensitivity = current - start + 1
+            sensitivity = (current - start + 1)*(current - start + 1)
             #print(f'up {sensitivity}')
             phidgets_ctlr.move_servo_position(x_dir=Direction.NA, y_dir=Direction.Positive, sensitivity=sensitivity)
 
         while keyboard.is_pressed('left'):
             current = time.time()
-            sensitivity = current - start + 1
+            sensitivity = (current - start + 1)*(current - start + 1)
             #print(f'left {sensitivity}')
             phidgets_ctlr.move_servo_position(x_dir=Direction.Negative, y_dir=Direction.NA, sensitivity=sensitivity)
 
         while keyboard.is_pressed('down'):
             current = time.time()
-            sensitivity = current - start + 1
+            sensitivity = (current - start + 1)*(current - start + 1)
             #print(f'down {sensitivity}')
             phidgets_ctlr.move_servo_position(x_dir=Direction.NA, y_dir=Direction.Negative, sensitivity=sensitivity)
 
         while keyboard.is_pressed('right'):
             current = time.time()
-            sensitivity = current - start + 1
+            sensitivity = (current - start + 1)*(current - start + 1)
             #print(f'right {sensitivity}')
             phidgets_ctlr.move_servo_position(x_dir=Direction.Positive, y_dir=Direction.NA, sensitivity=sensitivity)
 
@@ -159,8 +159,11 @@ class laser_guides:
         try:
             item = event.widget.get(event.widget.curselection())
             dict_item = self.mappings[item]
+            print("Success mapping")
             self.infobox['text'] = (item + "\nHorizontal coordinate: " + str(dict_item['horizontal']) + "\nVertical coordinate: " + str(dict_item['vertical']) + "\n")
+            print("Success infobox")
             phidgets_ctlr.SetPosition(HorizontalAngle=self.mappings[item]['horizontal'],VerticalAngle=self.mappings[item]['vertical'])
+            print("Success")
         except:
             print("No value in listbox selected")
 

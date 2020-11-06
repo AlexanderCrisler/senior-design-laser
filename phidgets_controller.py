@@ -31,10 +31,11 @@ class LaserSystem:
 		self.__ServoHorizontal.setTargetPosition(HorizontalAngle)
 		self.__ServoVertical.setEngaged(True)
 		self.__ServoHorizontal.setEngaged(True)
-		while int(self.__ServoHorizontal.getPosition()) !=  int(HorizontalAngle) or int(self.__ServoVertical.getPosition()) !=  int(VerticalAngle):
-			#print(int(CurrentServo.getPosition()))
-			#print(int(CurrentServo.getTargetPosition()))
-			time.sleep(.1)
+		# while abs(self.__ServoHorizontal.getPosition()-HorizontalAngle)<1  or abs(self.__ServoVertical.getPosition()-VerticalAngle)<1:
+		# 	#print(int(CurrentServo.getPosition()))
+		# 	#print(int(CurrentServo.getTargetPosition()))
+		# 	time.sleep(.1)
+		print("Success Position")
 
 
 	def move_servo_position(self, x_dir=Direction.NA, y_dir=Direction.NA, sensitivity=1):
