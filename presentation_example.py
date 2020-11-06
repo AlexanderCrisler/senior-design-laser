@@ -72,14 +72,15 @@ class laser_guides:
     
     #Event for add item button press.
     def add_item(self):
-        root1 = tk.Tk()
+        root1 = tk.Toplevel(self.master)
         add_item_gui = add_item_popup(root1)
+        root1 = TopLevel()
         root1.wait_window(root1)
         #Checks if the form was closed correctly.
         if add_item_gui.closed:
             #TODO: Get x,y coords. Popup gui.
             
-            root2 = tk.Tk()
+            root2 = tk.Toplevel(self.master)
             select_location_gui = move_laser_popup(root2)
             root2.wait_window(root2)
             if select_location_gui.closed:
@@ -145,6 +146,8 @@ class add_item_popup:
         self.master = master
         master.title("Add New Item")
         master.geometry("400x400")
+        master.focus_force()
+        master.grab_set()
         
         self.closed=False
         
@@ -169,6 +172,8 @@ class move_laser_popup:
         self.master = master
         master.title("Select Laser Location")
         master.geometry("400x400")
+        master.focus_force()
+        master.grab_set()
         
         self.closed=False
         
