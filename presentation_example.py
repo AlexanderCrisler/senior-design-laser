@@ -74,7 +74,7 @@ class laser_guides:
     def add_item(self):
         root1 = tk.Toplevel(self.master)
         add_item_gui = add_item_popup(root1)
-        root1 = TopLevel()
+        #root1 = TopLevel()
         root1.wait_window(root1)
         #Checks if the form was closed correctly.
         if add_item_gui.closed:
