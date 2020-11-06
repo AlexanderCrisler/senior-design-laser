@@ -44,6 +44,7 @@ class laser_guides:
                                     fg="yellow", bg="dark slate gray")
         self.deletebutton = tk.Button(master, text='Delete', command=self.delete_item, font=("Arial", 30),
                                       fg="yellow", bg="dark slate gray")
+        self.scrollbar=tk.Scrollbar(self.listbox)
         ############### hardcoded for testing
         self.mappings = all_items
         ###############
@@ -56,46 +57,17 @@ class laser_guides:
         self.exitbutton.place(relx=.9, rely=0, relwidth=.1, relheight=.05)
         self.addbutton.place(relx=.1, rely=0, relwidth=.1, relheight=.1)
         self.deletebutton.place(relx=.2, rely=0, relwidth=.1, relheight=.1)
-        #self.scrollbar.pack(side="right", fill="y")
+        self.scrollbar.pack(side="right", fill="y")
         
         # Bindings for widgets
         self.listbox_update(self.mappings)
         self.entry.bind("<KeyRelease>", self.on_keyrelease)
         self.listbox.bind('<<ListboxSelect>>', self.on_select)
-        #self.scrollbar.config(command=self.listbox.yview)
-        self.master.bind("<Key>", self.keypressed)
+        self.scrollbar.config(command=self.listbox.yview)
+        #self.master.bind("<Key>", self.keypressed)
 
     
-    # Tracking the keys pressed
-    def keypressed(self, event):
-        #print(event.keysym)
-        start = time.time()
-        sensitivity = 0      # Sensitivity of the laser movement
-
-        # ARROWKEY Directional Controls
-        while keyboard.is_pressed('up'):
-            current = time.time()
-            sensitivity = (current - start + 1)*(current - start + 1)
-            #print(f'up {sensitivity}')
-            phidgets_ctlr.move_servo_position(x_dir=Direction.NA, y_dir=Direction.Positive, sensitivity=sensitivity)
-
-        while keyboard.is_pressed('left'):
-            current = time.time()
-            sensitivity = (current - start + 1)*(current - start + 1)
-            #print(f'left {sensitivity}')
-            phidgets_ctlr.move_servo_position(x_dir=Direction.Negative, y_dir=Direction.NA, sensitivity=sensitivity)
-
-        while keyboard.is_pressed('down'):
-            current = time.time()
-            sensitivity = (current - start + 1)*(current - start + 1)
-            #print(f'down {sensitivity}')
-            phidgets_ctlr.move_servo_position(x_dir=Direction.NA, y_dir=Direction.Negative, sensitivity=sensitivity)
-
-        while keyboard.is_pressed('right'):
-            current = time.time()
-            sensitivity = (current - start + 1)*(current - start + 1)
-            #print(f'right {sensitivity}')
-            phidgets_ctlr.move_servo_position(x_dir=Direction.Positive, y_dir=Direction.NA, sensitivity=sensitivity)
+    
 
     
     #Event for add item button press.
@@ -193,6 +165,7 @@ class add_item_popup:
 
 class move_laser_popup:
     def __init__(self, master):
+
         self.master = master
         master.title("Select Laser Location")
         master.geometry("400x400")
@@ -214,7 +187,40 @@ class move_laser_popup:
         
         self.set_button = tk.Button(master, command=self.set_location, text="Set", font=("Arial", 20))
         self.set_button.place(relx=.35, rely=.35, relwidth=.3, relheight=.3)
-        
+        self.master.bind("<Key>", self.keypressed)
+    
+
+    # Tracking the keys pressed
+    def keypressed(self, event):
+        #print(event.keysym)
+        start = time.time()
+        sensitivity = 0      # Sensitivity of the laser movement
+
+        # ARROWKEY Directional Controls
+        while keyboard.is_pressed('up'):
+            current = time.time()
+            sensitivity = (current - start + 1)*(current - start + 1)
+            #print(f'up {sensitivity}')
+            phidgets_ctlr.move_servo_position(x_dir=Direction.NA, y_dir=Direction.Positive, sensitivity=sensitivity)
+
+        while keyboard.is_pressed('left'):
+            current = time.time()
+            sensitivity = (current - start + 1)*(current - start + 1)
+            #print(f'left {sensitivity}')
+            phidgets_ctlr.move_servo_position(x_dir=Direction.Negative, y_dir=Direction.NA, sensitivity=sensitivity)
+
+        while keyboard.is_pressed('down'):
+            current = time.time()
+            sensitivity = (current - start + 1)*(current - start + 1)
+            #print(f'down {sensitivity}')
+            phidgets_ctlr.move_servo_position(x_dir=Direction.NA, y_dir=Direction.Negative, sensitivity=sensitivity)
+
+        while keyboard.is_pressed('right'):
+            current = time.time()
+            sensitivity = (current - start + 1)*(current - start + 1)
+            #print(f'right {sensitivity}')
+            phidgets_ctlr.move_servo_position(x_dir=Direction.Positive, y_dir=Direction.NA, sensitivity=sensitivity)
+
     def left_button_click(self):
         phidgets_ctlr.move_servo_position(x_dir=Direction.Negative, y_dir=Direction.NA, sensitivity=100)
     
