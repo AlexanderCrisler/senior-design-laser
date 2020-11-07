@@ -1,5 +1,5 @@
-from Phidget22.Phidget import *
-from Phidget22.Devices.RCServo import *
+import Phidget22.Phidget
+import Phidget22.Devices.RCServo
 import enum
 import time
 
@@ -12,8 +12,8 @@ class Direction(enum.Enum):
 
 class LaserSystem:
 	def __init__(self):
-		self.__ServoVertical = RCServo()
-		self.__ServoHorizontal = RCServo()
+		self.__ServoVertical = Phidget22.Devices.RCServo.RCServo()
+		self.__ServoHorizontal = Phidget22.Devices.RCServo.RCServo()
 		self.__ServoHorizontal.setChannel(0)
 		self.__ServoVertical.setChannel(1)
 		self.__ServoVertical.openWaitForAttachment(5000)
