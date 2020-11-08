@@ -10,7 +10,7 @@ class StartMenu():
 
         if write_file:
             try:
-                json.dump(items, write_file)
+                json.dump(items, write_file, sort_keys=True, indent=4)
                 return True
             except Exception as e:
                 print(e)
@@ -20,7 +20,7 @@ class StartMenu():
         elif file_name:
             try:
                 write_file = open(file_name, 'w')
-                json.dump(items, write_file)
+                json.dump(items, write_file, sort_keys=True, indent=4)
                 return True
             except Exception as e:
                 print(e)
@@ -55,7 +55,7 @@ class StartMenu():
                 if read_file:
                     read_file.close()
         else:
-            write_file.close()
+            read_file.close()
 
         return {}
 
