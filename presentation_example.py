@@ -38,11 +38,11 @@ class laser_guides:
                                   highlightcolor="black", selectbackground="gray", selectforeground="black",
                                   highlightbackground="black")
         
-        self.addbutton = tk.Button(master, text='Add Item', command=self.add_item, font=("Arial", 30),
+        self.addbutton = tk.Button(master, text='Add Item', command=self.add_item, font=("Arial", 25),
                                    fg="yellow", bg="dark slate gray")
-        self.exitbutton = tk.Button(master, text='Exit', command=master.destroy, font=("Arial", 30),
+        self.exitbutton = tk.Button(master, text='Exit', command=master.destroy, font=("Arial", 25),
                                     fg="yellow", bg="dark slate gray")
-        self.deletebutton = tk.Button(master, text='Delete', command=self.delete_item, font=("Arial", 30),
+        self.deletebutton = tk.Button(master, text='Delete', command=self.delete_item, font=("Arial", 25),
                                       fg="yellow", bg="dark slate gray")
         self.scrollbar=tk.Scrollbar(self.listbox)
         ############### hardcoded for testing
@@ -54,9 +54,9 @@ class laser_guides:
         self.listbox.place(relx=0, rely=.16, relwidth=.7, relheight=.8)
         self.infobox.place(relx=.71, rely=.16, relwidth=.29, relheight=.8)
         self.entry.place(relx=0, rely=.1, relwidth=.699)
-        self.exitbutton.place(relx=.9, rely=0, relwidth=.1, relheight=.05)
-        self.addbutton.place(relx=.1, rely=0, relwidth=.1, relheight=.1)
-        self.deletebutton.place(relx=.2, rely=0, relwidth=.1, relheight=.1)
+        self.exitbutton.place(relx=.75, rely=0, relwidth=.25, relheight=.1)
+        self.addbutton.place(relx=.25, rely=0, relwidth=.25, relheight=.1)
+        self.deletebutton.place(relx=.5, rely=0, relwidth=.25, relheight=.1)
         self.scrollbar.pack(side="right", fill="y")
         
         # Bindings for widgets
