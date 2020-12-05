@@ -6,8 +6,10 @@ import save_load
 from phidgets_controller import LaserSystem
 from phidgets_controller import Direction
 
-phidgets_ctlr = LaserSystem()
-
+try:
+    phidgets_ctlr = LaserSystem()
+except:
+    print("No phidget, will run headless")
 """
 def move_servo_position(x_dir, y_dir, sensitivity=1):
     if x_dir == 1:
