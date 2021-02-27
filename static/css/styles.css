@@ -21,4 +21,12 @@ button {
    background-color: grey;
    font-size: 35px;
    color: yellow;
-}   
+}
+
+#searchbar {
+    background-color: DarkSlateGrey;
+    font-size: 40px;
+    color: yellow;
+    width: 60%;
+    margin-bottom: 4px;
+}
