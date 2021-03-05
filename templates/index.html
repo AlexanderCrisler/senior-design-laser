@@ -14,17 +14,18 @@
 
    <div>
    <select class='items' id="items" onChange="highlight();" border = 1 size=10>
-      {% for key, value in result.items() %}
-         <option value={{value}}> {{key}} </option>
+      {% for key in result %}
+         <option> {{key}} </option>
       {% endfor %}
    </select>
    </div>
    
    </p>
    <p>
-   "HI"
+      <button> <a href="/add">Add Item</a></button>
    </p>
 <script>
+var current_item
 var itemname, input, filter, listbox, txtValue
 function searchItem() {
    input = document.getElementById("searchbar");
@@ -46,9 +47,21 @@ function searchItem() {
 function highlight() {
    //window.alert("t")
    itemname = document.getElementById("items");
-   document.getElementById("h1").innerHTML = itemname[itemname.selectedIndex].innerHTML;
-   //document.getElementsByClassName("title").innerHTML = "a"
-   //document.getElementsByClassName("items").innerHTML = "<option value="1"> 'HI' </option>"
+   var sent_info = { name: itemname[itemname.selectedIndex].innerHTML };
+   fetch(`${window.origin}/selected_index`, {
+		method:  "POST",
+		credentials: "include",
+		body: JSON.stringify(sent_info),
+		cache: "no-cache",
+		headers: new Headers({ "content-type": "application/json" })
+   })
+   .then(function (response) {
+      response.json().then(function (data) {
+         current_item = data;
+         current_item['name'] = sent_info['name'];
+         document.getElementById('h1').innerHTML = current_item['vertical'] + "/" + current_item['horizontal'];
+      })
+   })
 }
 </script>
 </body>
