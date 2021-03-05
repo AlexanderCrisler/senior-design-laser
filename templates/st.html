@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Whatever I want</title>
+</head>
+<body>
+<h1>This is a header</h1>
+<p id="pp">this is a paragraph
+
+<select id="aaa" name="cars" size="2">
+	<option id="cars0" value=""></option>
+	<option id="cars1" value=""></option>
+</select>
+<button onclick="document.getElementById('1').innerHTML='BMWb'">Testing</button>
+</p>
+
+<script>
+var cars = ["bmw", "chevy"]
+for (i = 0; i < 2; i++) {
+	document.getElementById("cars" + i).value = cars[i]
+	document.getElementById("cars" + i).innerHTML = cars[i]
+}
+</script>
+
+</body>
+</html>

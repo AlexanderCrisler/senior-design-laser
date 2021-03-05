@@ -9,6 +9,13 @@ h1 {
     padding: 10px;
 }
 
+h2 {
+    border: 2px #eee solid;
+    color: red;
+    text-align: center;
+    padding: 10px;
+}
+
 select.items{
     background-color: DarkSlateGrey;
     font-size: 40px;
