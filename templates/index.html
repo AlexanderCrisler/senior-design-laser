@@ -25,8 +25,8 @@
       <button> <a href="/add">Add Item</a></button>
    </p>
 <script>
-var current_item
-var itemname, input, filter, listbox, txtValue
+var current_item;
+var itemname, input, filter, listbox, txtValue;
 function searchItem() {
    input = document.getElementById("searchbar");
    filter = input.value.toUpperCase();
@@ -40,10 +40,23 @@ function searchItem() {
          listbox[i].style.display= "none";
       }
     }
-}
-   
-   
+};
 
+
+document.addEventListener('keydown', event => {
+    fetch(`${window.origin}/key_press`, {
+                method:  "POST",
+                credentials: "include",
+                body: JSON.stringify(event.keyCode),
+                cache: "no-cache",
+                headers: new Headers({ "content-type": "application/json" })
+       })
+       .then(function (response) {
+          response.json().then(function (data) {
+          })
+       })
+    }
+);
 function highlight() {
    //window.alert("t")
    itemname = document.getElementById("items");
@@ -62,7 +75,7 @@ function highlight() {
          document.getElementById('h1').innerHTML = current_item['vertical'] + "/" + current_item['horizontal'];
       })
    })
-}
+};
 </script>
 </body>
 </html>
