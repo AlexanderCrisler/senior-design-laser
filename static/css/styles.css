@@ -31,7 +31,7 @@ button {
    color: yellow;
 }
 
-#searchbar {
+.searchbar {
     background-color: DarkSlateGrey;
     font-size: 40px;
     color: yellow;

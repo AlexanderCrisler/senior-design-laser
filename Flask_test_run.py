@@ -7,12 +7,14 @@ all_items = start_menu.load(file_name='master_save_file')
 current_selection = ""
 blank_item = {'name': ''}
 
-
+try:
+    phidgets_ctlr = LaserSystem()
+except:
+    print("No phidget detected, will run headless")
 
 @app.route('/')
 def hello_world():
     return render_template('index.html', result=all_items.keys())
-
 
 @app.route('/add')
 def add_items():
@@ -37,13 +39,13 @@ def key_press():
     req = request.get_json()
 
     if (req == 39):
-        print("right key function here")
+        phidgets_ctlr.right_button_click()
     elif (req == 40):
-        print("down key function here")
+        phidgets_ctlr.down_button_click()
     elif (req == 37):
-        print("left key function here")
+        phidgets_ctlr.left_button_click()
     elif (req == 38):
-        print("up key function here")
+        phidgets_ctlr.up_button_click()
     response = req
     return jsonify(response)
 
