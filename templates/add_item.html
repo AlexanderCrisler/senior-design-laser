@@ -8,11 +8,11 @@
 
 <p>
 <label>Item Name:</label>
-<input type="text" id="searchbar" name="itemName"><br><br>
+<input type="text" class="searchbar" id="itemName"><br><br>
 <label>Horizontal Location:</label>
-<input type="text" id="searchbar" name="horizontal"><br><br>
+<input type="text" class="searchbar" id="horizontal"><br><br>
 <label>Vertical Location:</label>
-<input type="text" id="searchbar" name="vertical"><br><br>
+<input type="text" class="searchbar" id="vertical"><br><br>
 <button onclick="add_item_click()">Save Item</button>
 <button><a href='/'>Back</a></button>
 </p>
@@ -21,9 +21,9 @@
 
 function add_item_click() {
 
-    sent_info = {name: document.getElementsByName("itemname")}
-    sent_info['horizontal'] = document.getElementsByName("horizontal")
-    sent_info['vertical'] = document.getElementsByName("vertical")
+    var sent_info = {'name': document.getElementById("itemName").value}
+    sent_info['horizontal'] = document.getElementById("horizontal").value
+    sent_info['vertical'] = document.getElementById("vertical").value
     fetch(`${window.origin}/add/submit`, {
 		method:  "POST",
 		credentials: "include",
@@ -31,7 +31,12 @@ function add_item_click() {
 		cache: "no-cache",
 		headers: new Headers({ "content-type": "application/json" })
    })
-
+   .then(function(response) {
+       response.json().then(function (){
+           window.location = window.origin
+       })
+   })
+   //window.location = window.origin
 }
 
 </script>
