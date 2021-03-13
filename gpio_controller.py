@@ -61,6 +61,18 @@ class LaserSystem:
         """ Sets the servos to a default position at 90, 90, which should point straight down."""
         set_position(90, 90)
         # Turn off laser diode
+
+    def left_button_click(self):
+        self.move_servo_position(x_dir=Direction.Negative, y_dir=Direction.NA, sensitivity=100)
+    
+    def right_button_click(self):
+        self.move_servo_position(x_dir=Direction.Positive, y_dir=Direction.NA, sensitivity=100)
+        
+    def up_button_click(self):
+        self.move_servo_position(x_dir=Direction.NA, y_dir=Direction.Positive, sensitivity=100)
+        
+    def down_button_click(self):
+        self.move_servo_position(x_dir=Direction.NA, y_dir=Direction.Negative, sensitivity=100)
     
 
 if __name__ == '__main__':
