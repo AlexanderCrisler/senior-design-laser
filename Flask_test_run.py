@@ -48,5 +48,5 @@ def key_press():
     return jsonify(response)
 
 
-if __name__ == '___main___':
+if __name__ == '__main__':
     app.run(debug=True)
