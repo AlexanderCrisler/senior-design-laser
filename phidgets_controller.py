@@ -37,7 +37,6 @@ class LaserSystem:
 		# 	time.sleep(.1)
 		print("Success Position")
 
-
 	def move_servo_position(self, x_dir=Direction.NA, y_dir=Direction.NA, sensitivity=1):
 		# x_dir and y_dir should be set to -1, 0 , 1 depending on their direction
 		if (
@@ -55,14 +54,60 @@ class LaserSystem:
 			
 			#print(self.Get_Angle())
 
+    def keypressed(self, event):
+        #print(event.keysym)
+        start = time.time()
+        sensitivity = 0      # Sensitivity of the laser movement
+
+        # ARROWKEY Directional Controls
+        while keyboard.is_pressed('up'):
+            current = time.time()
+            sensitivity = (current - start + 1)*(current - start + 1)
+            #print(f'up {sensitivity}')
+            phidgets_ctlr.move_servo_position(x_dir=Direction.NA, y_dir=Direction.Positive, sensitivity=sensitivity)
+
+        while keyboard.is_pressed('left'):
+            current = time.time()
+            sensitivity = (current - start + 1)*(current - start + 1)
+            #print(f'left {sensitivity}')
+            phidgets_ctlr.move_servo_position(x_dir=Direction.Negative, y_dir=Direction.NA, sensitivity=sensitivity)
+
+        while keyboard.is_pressed('down'):
+            current = time.time()
+            sensitivity = (current - start + 1)*(current - start + 1)
+            #print(f'down {sensitivity}')
+            phidgets_ctlr.move_servo_position(x_dir=Direction.NA, y_dir=Direction.Negative, sensitivity=sensitivity)
+
+        while keyboard.is_pressed('right'):
+            current = time.time()
+            sensitivity = (current - start + 1)*(current - start + 1)
+            #print(f'right {sensitivity}')
+            phidgets_ctlr.move_servo_position(x_dir=Direction.Positive, y_dir=Direction.NA, sensitivity=sensitivity)
+
+    def left_button_click(self):
+        phidgets_ctlr.move_servo_position(x_dir=Direction.Negative, y_dir=Direction.NA, sensitivity=100)
+    
+    def right_button_click(self):
+        phidgets_ctlr.move_servo_position(x_dir=Direction.Positive, y_dir=Direction.NA, sensitivity=100)
+        
+    def up_button_click(self):
+        phidgets_ctlr.move_servo_position(x_dir=Direction.NA, y_dir=Direction.Positive, sensitivity=100)
+        
+    def down_button_click(self):
+        phidgets_ctlr.move_servo_position(x_dir=Direction.NA, y_dir=Direction.Negative, sensitivity=100)
+    
+    def set_location(self):
+        self.closed=True
+        position = phidgets_ctlr.Get_TargetPosition()
+        self.horizontal = position[0]
+        self.vertical = position[1]
+        self.master.destroy()
 	
 	def Get_TargetPosition(self):
 		return [self.__ServoHorizontal.getTargetPosition(), self.__ServoVertical.getTargetPosition()]
 
-
 	def Get_Angle(self):
 		return [self.__ServoHorizontal.getPosition(), self.__ServoVertical.getPosition()]
-
 
 def main():
 	Pointer=LaserSystem()
