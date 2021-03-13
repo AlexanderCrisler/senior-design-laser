@@ -1,5 +1,6 @@
 import save_load
 from flask import Flask, render_template, request, make_response, jsonify
+from gpio_controller import LaserSystem
 
 app = Flask(__name__)
 start_menu = save_load.StartMenu()
