@@ -12,8 +12,8 @@ class Direction(Enum):
 
 class LaserSystem:
     def __init__(self):
-        self.__ServoVertical = AngularServo(12, min_angle=0, max_angle=180, min_pulse_width=.0005, max_pulse_width=.0023, frame_width=.0025)
-        self.__ServoHorizontal = AngularServo(13, min_angle=0, max_angle=180, min_pulse_width=.0005, max_pulse_width=.0023, frame_width=.0025)
+        self.__ServoVertical = AngularServo(12, min_angle=0, max_angle=180, frame_width=.025)
+        self.__ServoHorizontal = AngularServo(13, min_angle=0, max_angle=180, frame_width=.025)
         # initialize laser diode
 
     def set_angle(self, servo, angle):
