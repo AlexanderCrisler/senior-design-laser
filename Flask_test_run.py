@@ -2,16 +2,16 @@ import save_load
 from flask import Flask, render_template, request, make_response, jsonify
 from gpio_controller import LaserSystem
 
+try:
+    phidgets_ctlr = LaserSystem()
+except:
+    print("No phidget detected, will run headless")
+
 app = Flask(__name__)
 start_menu = save_load.StartMenu()
 all_items = start_menu.load(file_name='master_save_file')
 current_selection = ""
 blank_item = {'name': ''}
-
-try:
-    phidgets_ctlr = LaserSystem()
-except:
-    print("No phidget detected, will run headless")
 
 @app.route('/')
 def hello_world():
@@ -52,4 +52,4 @@ def key_press():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)

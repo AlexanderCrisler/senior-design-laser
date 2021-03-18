@@ -16,6 +16,8 @@ class LaserSystem:
         self.__ServoHorizontal = AngularServo(13, min_angle=0, max_angle=180, min_pulse_width=.000553, max_pulse_width=.0023, frame_width=.025)
         self.__last_known_vert_loc = 90
         self.__last_known_hori_loc = 90
+        self.__ServoVertical.angle = None
+        self.__ServoHorizontal.angle = None
         # initialize laser diode
 
     def set_angle(self, servo, servo_direction, angle):
@@ -101,7 +103,9 @@ if __name__ == '__main__':
     time.sleep(1)
 
     Pointer.default_position()
-    time.sleep(1)
+    time.sleep(3)
+    while True:
+        pass
 
     end = time.time()
     print(f"time elapsed: {end - start}")
