@@ -1158,3 +1158,5 @@ venv/Scripts/python.exe
 venv/Scripts/pythonw.exe
 .gitignore
 __pycache__/gpio_controller.cpython-38.pyc
+__pycache__/Flask_test_run.cpython-37.pyc
+__pycache__/gpio_controller.cpython-37.pyc

@@ -12,19 +12,34 @@ class Direction(Enum):
 
 class LaserSystem:
     def __init__(self):
-        self.__ServoVertical = AngularServo(12, min_angle=0, max_angle=180, frame_width=.025)
-        self.__ServoHorizontal = AngularServo(13, min_angle=0, max_angle=180, frame_width=.025)
+        self.__ServoVertical = AngularServo(12, min_angle=0, max_angle=180, min_pulse_width=.000553, max_pulse_width=.0023, frame_width=.025)
+        self.__ServoHorizontal = AngularServo(13, min_angle=0, max_angle=180, min_pulse_width=.000553, max_pulse_width=.0023, frame_width=.025)
+        self.__last_known_vert_loc = 90
+        self.__last_known_hori_loc = 90
         # initialize laser diode
 
-    def set_angle(self, servo, angle):
+    def set_angle(self, servo, servo_direction, angle):
         """ Used for internally setting the servos angle variable and waiting for the positioning to complete """
-        servo.angle = angle
-        time.sleep(.8)
+
+        if servo_direction == "vertical" and self.__last_known_vert_loc != angle:
+            move_degree = abs(self.__last_known_vert_loc - angle)
+            servo.angle = angle
+            self.__last_known_vert_loc = angle
+        elif servo_direction == "horizontal" and self.__last_known_hori_loc != angle:
+            move_degree = abs(self.__last_known_hori_loc - angle)
+            servo.angle = angle
+            self.__last_known_hori_loc = angle
+        else:
+            return
+
+        time_to_move = (move_degree * .25) / 60
+        time.sleep(time_to_move)
+        servo.angle = None
     
     def set_position(self, HorizontalAngle, VerticalAngle):
         """ Used for externally changing the position of the servos """
-        thread1 = Thread(target=self.set_angle, args=(self.__ServoVertical, VerticalAngle))
-        thread2 = Thread(target=self.set_angle, args=(self.__ServoHorizontal, HorizontalAngle))
+        thread1 = Thread(target=self.set_angle, args=(self.__ServoVertical, "vertical", VerticalAngle))
+        thread2 = Thread(target=self.set_angle, args=(self.__ServoHorizontal, "horizontal", HorizontalAngle))
         thread1.start()
         thread2.start()
 
@@ -40,12 +55,13 @@ class LaserSystem:
             and self.__ServoVertical.angle + y_dir.value * .01 * sensitivity >= self.__ServoVertical.min_angle 
             and self.__ServoVertical.angle + y_dir.value * .01 * sensitivity <= self.__ServoVertical.max_angle
            ):
-            x_pos = self.__ServoHorizontal.angle + x_dir.value * .01 * sensitivity
+            x_pos = self.__last_known_hori_loc + x_dir.value * .01 * sensitivity
 
-            y_pos = self.__ServoVertical.angle + y_dir.value * .01 * sensitivity
+            y_pos = self.__last_known_vert_loc + y_dir.value * .01 * sensitivity
 
-            self.__ServoHorizontal.angle = x_pos
-            self.__ServoVertical.angle = y_pos
+            self.set_position(x_pos, y_pos)
+            # self.__ServoHorizontal.angle = x_pos
+            # self.__ServoVertical.angle = y_pos
 
             print(self.get_angle())
 
@@ -59,7 +75,7 @@ class LaserSystem:
 
     def default_position(self):
         """ Sets the servos to a default position at 90, 90, which should point straight down."""
-        set_position(90, 90)
+        self.set_position(90, 90)
         # Turn off laser diode
 
     def left_button_click(self):
@@ -82,8 +98,10 @@ if __name__ == '__main__':
 
     Pointer.set_position(0, 0)
     Pointer.set_position(180, 180)
+    time.sleep(1)
 
     Pointer.default_position()
+    time.sleep(1)
 
     end = time.time()
     print(f"time elapsed: {end - start}")
