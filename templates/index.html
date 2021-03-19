@@ -5,6 +5,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename= 'css/styles.css') }}">
     <title class='title'>WayPoint System</title>
 </head>
+
+<script type=text/javascript src="{{
+  url_for('static', filename='js/index_handler.js') }}"></script>
+  
 <body>
    <h1 id="h1">Welcome to the WayPoint Guidance System</h1>
    <p id="p1">
@@ -24,55 +28,6 @@
    <p>
       <button> <a href="/add">Add Item</a></button>
    </p>
-<script>
-var current_item;
-var itemname, input, filter, listbox, txtValue;
-function searchItem() {
-   input = document.getElementById("searchbar");
-   filter = input.value.toUpperCase();
-   listbox = document.getElementById("items");
-   
-   for (i = 0; i < listbox.length; i++) {
-      txtValue = listbox[i].textContent || listbox[i].innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-         listbox[i].style.display = "";
-      } else {
-         listbox[i].style.display= "none";
-      }
-    }
-};
 
-
-document.addEventListener('keydown', event => {
-    fetch(`${window.origin}/key_press`, {
-                method:  "POST",
-                credentials: "include",
-                body: JSON.stringify(event.keyCode),
-                cache: "no-cache",
-                headers: new Headers({ "content-type": "application/json" })
-       })
-       .then(function (response) {
-          response.json().then(function (data) {
-          })
-       })
-    }
-);
-function highlight() {
-   //window.alert("t")
-   itemname = document.getElementById("items");
-   var sent_info = { name: itemname[itemname.selectedIndex].innerHTML };
-   fetch(`${window.origin}/selected_index`, {
-		method:  "POST",
-		credentials: "include",
-		body: JSON.stringify(sent_info),
-		cache: "no-cache",
-		headers: new Headers({ "content-type": "application/json" })
-   })
-   .then(function (response) {
-      response.json().then(function (data) {
-      })
-   })
-};
-</script>
 </body>
 </html>
