@@ -26,8 +26,9 @@ def add_items():
 def selected_index():
     req = request.get_json()
     current_selection = req['name'].strip()
+    current_selection = all_items[current_selection]
     
-    phidgets_ctlr.set_position(current_selection['horizontal'], current_selection['vertical'])
+    #phidgets_ctlr.set_position(current_selection['horizontal'], current_selection['vertical'])
     response = make_response(jsonify(all_items[current_selection]), 200)
     return response
 
@@ -38,7 +39,7 @@ def submit_add_item():
     print(req['name'])
     all_items[req['name']] = temp_dictionary
 
-@app.route('/key_press', methods=["POST"])
+@app.route('/add/key_press', methods=["POST"])
 def key_press():
     req = request.get_json()
 
