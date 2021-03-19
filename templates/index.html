@@ -9,7 +9,7 @@
    <h1 id="h1">Welcome to the WayPoint Guidance System</h1>
    <p id="p1">
    <div>
-      <input id="searchbar" type="text" placeholder="Search" onkeyup="searchItem()">
+      <input class="searchbar" id="searchbar" type="text" placeholder="Search" onkeyup="searchItem()">
    </div>
 
    <div>
@@ -70,9 +70,6 @@ function highlight() {
    })
    .then(function (response) {
       response.json().then(function (data) {
-         current_item = data;
-         current_item['name'] = sent_info['name'];
-         document.getElementById('h1').innerHTML = current_item['vertical'] + "/" + current_item['horizontal'];
       })
    })
 };
