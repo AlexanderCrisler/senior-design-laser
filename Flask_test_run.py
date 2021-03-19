@@ -9,12 +9,13 @@ current_selection = ""
 blank_item = {'name': ''}
 
 try:
-    phidgets_ctlr = LaserSystem()
+    if 'phidgets_ctlr' not in globals():
+        phidgets_ctlr = LaserSystem()
 except:
     print("No phidget detected, will run headless")
 
 @app.route('/')
-def hello_world():
+def index():
     return render_template('index.html', result=all_items.keys())
 
 @app.route('/add')
@@ -22,9 +23,11 @@ def add_items():
     return render_template('add_item.html')
 
 @app.route('/selected_index', methods=["POST"])
-def get_item():
+def selected_index():
     req = request.get_json()
     current_selection = req['name'].strip()
+    
+    phidgets_ctlr.set_position(current_selection['horizontal'], current_selection['vertical'])
     response = make_response(jsonify(all_items[current_selection]), 200)
     return response
 
@@ -49,7 +52,6 @@ def key_press():
         phidgets_ctlr.up_button_click()
     response = req
     return jsonify(response)
-
 
 if __name__ == '__main__':
     app.run(debug=True)
