@@ -13,6 +13,8 @@ start_menu = save_load.StartMenu()
 all_items = start_menu.load(file_name='master_save_file')
 current_selection = ""
 blank_item = {'name': ''}
+# This should set the server name. I had some issues getting this to work
+app.config['SERVER_NAME'] = 'localhost:5000'
 
 @app.route('/')
 def index():
@@ -55,4 +57,5 @@ def key_press():
     return jsonify(response)
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    #adding the host='0.0.0.0' line makes flask run on all ip addresses currently on the computer.
+    app.run(host='0.0.0.0', debug=True)
