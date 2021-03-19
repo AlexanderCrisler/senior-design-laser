@@ -1,6 +1,6 @@
 import save_load
 from flask import Flask, render_template, request, make_response, jsonify
-from gpio_controller import LaserSystem
+#from gpio_controller import LaserSystem
 
 try:
     if 'phidgets_ctlr' not in globals():
@@ -27,9 +27,9 @@ def selected_index():
     req = request.get_json()
     current_selection = req['name'].strip()
     current_selection = all_items[current_selection]
-    
-    #phidgets_ctlr.set_position(current_selection['horizontal'], current_selection['vertical'])
-    response = make_response(jsonify(all_items[current_selection]), 200)
+
+    phidgets_ctlr.set_position(current_selection['horizontal'], current_selection['vertical'])
+    response = jsonify(current_selection)
     return response
 
 @app.route('/add/submit', methods=['POST'])
