@@ -6,39 +6,19 @@
     <title class='title'>WayPoint System</title>
 </head>
 
+<script type=text/javascript src="{{
+  url_for('static', filename='js/index_handler.js') }}"></script>
+
+<body>
 <p>
-<label>Item Name:</label>
-<input type="text" class="searchbar" id="itemName"><br><br>
-<label>Horizontal Location:</label>
-<input type="text" class="searchbar" id="horizontal"><br><br>
-<label>Vertical Location:</label>
-<input type="text" class="searchbar" id="vertical"><br><br>
-<button onclick="add_item_click()">Save Item</button>
-<button><a href='/'>Back</a></button>
+   <label>Item Name:</label>
+   <input type="text" class="searchbar" id="itemName"><br><br>
+   <label>Horizontal Location:</label>
+   <input type="text" class="searchbar" id="horizontal"><br><br>
+   <label>Vertical Location:</label>
+   <input type="text" class="searchbar" id="vertical"><br><br>
+   <button onclick="add_item_click()">Save Item</button>
+   <button><a href='/'>Back</a></button>
 </p>
-
-<script>
-
-function add_item_click() {
-
-    var sent_info = {'name': document.getElementById("itemName").value}
-    sent_info['horizontal'] = document.getElementById("horizontal").value
-    sent_info['vertical'] = document.getElementById("vertical").value
-    fetch(`${window.origin}/add/submit`, {
-		method:  "POST",
-		credentials: "include",
-		body: JSON.stringify(sent_info),
-		cache: "no-cache",
-		headers: new Headers({ "content-type": "application/json" })
-   })
-   .then(function(response) {
-       response.json().then(function (){
-           window.location = window.origin
-       })
-   })
-   //window.location = window.origin
-}
-
-</script>
 
 </html>
