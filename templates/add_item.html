@@ -6,34 +6,20 @@
     <title class='title'>WayPoint System</title>
 </head>
 
+<script type=text/javascript src="{{
+  url_for('static', filename='js/index_handler.js') }}"></script>
+
+<body>
 <p>
-<label>Item Name:</label>
-<input type="text" id="searchbar" name="itemName"><br><br>
-<label>Horizontal Location:</label>
-<input type="text" id="searchbar" name="horizontal"><br><br>
-<label>Vertical Location:</label>
-<input type="text" id="searchbar" name="vertical"><br><br>
-<button onclick="add_item_click()">Save Item</button>
-<button><a href='/'>Back</a></button>
+   <label>Item Name:</label>
+   <input type="text" id="searchbar" name="itemName"><br><br>
+   <label>Horizontal Location:</label>
+   <input type="text" id="searchbar" name="horizontal"><br><br>
+   <label>Vertical Location:</label>
+   <input type="text" id="searchbar" name="vertical"><br><br>
+   <button onclick="add_item_click()">Save Item</button>
+   <button><a href='/'>Back</a></button>
 </p>
-
-<script>
-
-function add_item_click() {
-
-    sent_info = {name: document.getElementsByName("itemname")}
-    sent_info['horizontal'] = document.getElementsByName("horizontal")
-    sent_info['vertical'] = document.getElementsByName("vertical")
-    fetch(`${window.origin}/add/submit`, {
-		method:  "POST",
-		credentials: "include",
-		body: JSON.stringify(sent_info),
-		cache: "no-cache",
-		headers: new Headers({ "content-type": "application/json" })
-   })
-
-}
-
-</script>
+</body>
 
 </html>
