@@ -16,6 +16,8 @@ class LaserSystem:
         self.__ServoHorizontal = AngularServo(13, min_angle=0, max_angle=180, min_pulse_width=.000553, max_pulse_width=.0023, frame_width=.025)
         self.__last_known_vert_loc = 90
         self.__last_known_hori_loc = 90
+        self.__ServoVertical.angle = None
+        self.__ServoHorizontal.angle = None
         self.default_position()
         # initialize laser diode
 
