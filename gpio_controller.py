@@ -35,6 +35,7 @@ class LaserSystem:
             return
 
         time_to_move = (move_degree * .25) / 60
+        print(f"{time_to_move} sec")
         time.sleep(time_to_move)
         servo.angle = None
     
@@ -52,20 +53,20 @@ class LaserSystem:
         """ Smooth locomotion of the servos, preferably through arrow keys or buttons """
         # x_dir and y_dir should be set to -1, 0 , 1 depending on their direction
         if (
-            self.__ServoHorizontal.angle + x_dir.value * .01 * sensitivity >= self.__ServoHorizontal.min_angle
-            and self.__ServoHorizontal.angle + x_dir.value * .01 * sensitivity <= self.__ServoHorizontal.max_angle 
-            and self.__ServoVertical.angle + y_dir.value * .01 * sensitivity >= self.__ServoVertical.min_angle 
-            and self.__ServoVertical.angle + y_dir.value * .01 * sensitivity <= self.__ServoVertical.max_angle
+            self.__last_known_hori_loc + x_dir.value * .01 * sensitivity >= self.__ServoHorizontal.min_angle
+            and self.__last_known_hori_loc + x_dir.value * .01 * sensitivity <= self.__ServoHorizontal.max_angle 
+            and self.__last_known_vert_loc + y_dir.value * .01 * sensitivity >= self.__ServoVertical.min_angle 
+            and self.__last_known_vert_loc + y_dir.value * .01 * sensitivity <= self.__ServoVertical.max_angle
            ):
             x_pos = self.__last_known_hori_loc + x_dir.value * .01 * sensitivity
 
             y_pos = self.__last_known_vert_loc + y_dir.value * .01 * sensitivity
-
+            print(f"{x_pos}, {y_pos}")
             self.set_position(x_pos, y_pos)
             # self.__ServoHorizontal.angle = x_pos
             # self.__ServoVertical.angle = y_pos
 
-            print(self.get_angle())
+            #print(self.get_angle())
 
     def get_target_position(self):
         """ Functionally the same as get_angle, returns the set positions of the servos in a list """
@@ -73,7 +74,7 @@ class LaserSystem:
 
     def get_angle(self):
         """ Functionally the same as get_target_position, returns the set positions of the servos in a list """
-        return [self.__ServoHorizontal.angle, self.__ServoVertical.angle]
+        return [self.__last_known_hori_loc, self.__last_known_vert_loc]
 
     def default_position(self):
         """ Sets the servos to a default position at 90, 90, which should point straight down."""
@@ -98,9 +99,10 @@ if __name__ == '__main__':
 
     Pointer = LaserSystem()
 
-    Pointer.set_position(0, 0)
-    Pointer.set_position(180, 180)
-    time.sleep(1)
+    for i in range(0, 51):
+        Pointer.set_position(0, 0)
+        Pointer.set_position(90, 90)
+
 
     Pointer.default_position()
 
