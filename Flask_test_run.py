@@ -37,9 +37,11 @@ def selected_index():
 @app.route('/add/submit', methods=['POST'])
 def submit_add_item():
     req = request.get_json()
-    temp_dictionary = {"horizontal": req['horizontal'], "vertical": req['vertical']}
-    print(req['name'])
+    current_angle = phidgets_ctlr.get_target_position()
+    temp_dictionary = {"horizontal": current_angle[0], "vertical": current_angle[1]}
     all_items[req['name']] = temp_dictionary
+    response = make_response(jsonify({'return': None}), 200)
+    return response
 
 @app.route('/add/key_press', methods=["POST"])
 def key_press():
@@ -55,6 +57,21 @@ def key_press():
         phidgets_ctlr.up_button_click()
     response = req
     return jsonify(response)
+
+@app.route('/delete', methods=['POST'])
+def delete_item():
+    req = request.get_json()
+    #print(req, flush=True)
+    #print(all_items[req['name']].strip())
+    popped = all_items.pop(req['name'].strip(), None)
+    response = make_response(jsonify({'return': None}), 200 if popped == 1 else 100)
+    return response
+
+@app.route('/get_all_items', methods=['GET'])
+def return_all_items():
+    response = make_response(jsonify(list(all_items.keys()), 200))
+    #response = make_response(jsonify([1,2,3,4,5]), 200)
+    return response
 
 if __name__ == '__main__':
     #adding the host='0.0.0.0' line makes flask run on all ip addresses currently on the computer.
