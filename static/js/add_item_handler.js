@@ -3,8 +3,6 @@
 function add_item_click() {
 
     sent_info = {name: document.getElementsByName("itemname")}
-    sent_info['horizontal'] = document.getElementsByName("horizontal")
-    sent_info['vertical'] = document.getElementsByName("vertical")
     fetch(`${window.origin}/add/submit`, {
 		method:  "POST",
 		credentials: "include",

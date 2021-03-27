@@ -1,9 +1,17 @@
 var current_item;
 var itemname, input, filter, listbox, txtValue;
 
+input = document.getElementById("searchbar");
+
+input.addEventListener("keyup", function(event) {
+    if (event.keyCode == 13) {
+        event.preventDefault();
+        document.getElementById("searchbutton").click();
+    }
+});
+
 // Handles searching through listbox by matching substrings
 function searchItem() {
-   input = document.getElementById("searchbar");
    filter = input.value.toUpperCase();
    listbox = document.getElementById("items");
    

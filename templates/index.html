@@ -5,15 +5,13 @@
     <link rel="stylesheet" href="{{ url_for('static', filename= 'css/styles.css') }}">
     <title class='title'>WayPoint System</title>
 </head>
-
-<script type=text/javascript src="{{
-  url_for('static', filename='js/index_handler.js') }}"></script>
   
 <body>
    <h1 id="h1">Welcome to the WayPoint Guidance System</h1>
    <p id="p1">
    <div>
-      <input class="searchbar" id="searchbar" type="text" placeholder="Search" onkeyup="searchItem()">
+      <input class="searchbar" id="searchbar" type="text" placeholder="Search">
+      <button id="searchbutton" onclick="searchItem()">Search</button>
    </div>
 
    <div>
@@ -31,4 +29,8 @@
       <button onclick='load_items_to_list()'>TEMP REFRESH</button>
    </p>
 </body>
+
+<script type=text/javascript src="{{
+  url_for('static', filename='js/index_handler.js') }}"></script>
+  
 </html>
