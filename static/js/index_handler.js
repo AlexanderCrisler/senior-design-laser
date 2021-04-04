@@ -42,3 +42,40 @@ function highlight() {
       })
    })
 };
+
+function load_items_to_list() {
+   fetch(`${window.origin}/get_all_items`, {
+		method:  "GET",
+		credentials: "include",
+		cache: "no-cache",
+		headers: new Headers({ "content-type": "application/json" })
+   })
+   .then(function (response) {
+      response.json().then(function (data) {
+         //console.log(data)
+         select_box = document.getElementById('items')
+         select_box.innerHTML = ''
+         for (var i = 0; i < data[0].length; i++) {
+            var option = document.createElement("option")
+            option.innerHTML = data[0][i]
+            select_box.appendChild(option)
+         }
+      })
+   })
+}
+function deleteIndex() {
+   itemname = document.getElementById("items");
+   var sent_info = {name: itemname[itemname.selectedIndex].innerHTML}
+   fetch(`${window.origin}/delete`, {
+		method:  "POST",
+		credentials: "include",
+		body: JSON.stringify(sent_info),
+		cache: "no-cache",
+		headers: new Headers({ "content-type": "application/json" })
+   })
+   .then(function(response) {
+       response.json().then(function (){})
+   })
+   console.log("Calling")
+   load_items_to_list()
+}
