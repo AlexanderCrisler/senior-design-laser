@@ -31,6 +31,16 @@ button {
    color: yellow;
 }
 
+p1 {
+    background-color: DarkSlateGrey;
+    font-size: 40px;
+    color: yellow;
+    text-align: center;
+    vertical-align: top;
+    width: 60%;
+    display: block
+}
+
 .searchbar {
     background-color: DarkSlateGrey;
     font-size: 40px;
