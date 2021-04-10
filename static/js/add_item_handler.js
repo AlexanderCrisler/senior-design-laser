@@ -2,7 +2,7 @@
 // Adds the item to the diciontary of all items once submitted
 function add_item_click() {
 
-    sent_info = {name: document.getElementsByName("itemname")}
+    sent_info = {name: document.getElementById("itemName").value}
     fetch(`${window.origin}/add/submit`, {
 		method:  "POST",
 		credentials: "include",
@@ -10,7 +10,7 @@ function add_item_click() {
 		cache: "no-cache",
 		headers: new Headers({ "content-type": "application/json" })
    })
-
+   window.location = window.origin
 }
 
 // Window will listen for keyboard presses and call the laser moving function
