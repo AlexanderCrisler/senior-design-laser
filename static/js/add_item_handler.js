@@ -16,7 +16,7 @@ function add_item_click() {
 // Window will listen for keyboard presses and call the laser moving function
 // if the right key is pressed
 document.addEventListener('keydown', event => {
-    fetch(`${window.origin}/key_press`, {
+    fetch(`${window.origin}/add/key_press`, {
                 method:  "POST",
                 credentials: "include",
                 body: JSON.stringify(event.keyCode),
