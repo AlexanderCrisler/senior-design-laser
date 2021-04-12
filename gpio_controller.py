@@ -12,10 +12,11 @@ class Direction(Enum):
 
 class LaserSystem:
     def __init__(self):
-        self.__ServoVertical = AngularServo(12, min_angle=0, max_angle=180, min_pulse_width=.000553, max_pulse_width=.0023, frame_width=.025)
-        self.__ServoHorizontal = AngularServo(13, min_angle=0, max_angle=180, min_pulse_width=.000553, max_pulse_width=.0023, frame_width=.025)
-        self.__last_known_vert_loc = 90
-        self.__last_known_hori_loc = 90
+        self.__ServoVertical = AngularServo(5, min_angle=0, max_angle=180, min_pulse_width=.000553, max_pulse_width=.002425, frame_width=.02)
+        self.__ServoHorizontal = AngularServo(6, min_angle=0, max_angle=180, min_pulse_width=.000553, max_pulse_width=.002425, frame_width=.02)
+        self.__last_known_vert_loc = 0
+        self.__last_known_hori_loc = 0
+        #self.default_position()
         self.__ServoVertical.angle = None
         self.__ServoHorizontal.angle = None
         # initialize laser diode
@@ -36,7 +37,7 @@ class LaserSystem:
 
         time_to_move = (move_degree * .25) / 60
         print(f"{time_to_move} sec")
-        time.sleep(time_to_move)
+        time.sleep(.3)
         servo.angle = None
     
     def set_position(self, HorizontalAngle, VerticalAngle):
@@ -99,12 +100,17 @@ if __name__ == '__main__':
 
     Pointer = LaserSystem()
 
-    for i in range(0, 51):
-        Pointer.set_position(0, 0)
-        Pointer.set_position(90, 90)
+    # for i in range(0, 51):
+    #     Pointer.set_position(0, 0)
+    #     Pointer.set_position(90, 90)
 
 
-    Pointer.default_position()
+    #Pointer.default_position()
+    while(True):
+        Pointer.set_position(95,130)
+        time.sleep(.25)
+        Pointer.set_position(96,131)
+        time.sleep(.25)
 
     end = time.time()
     print(f"time elapsed: {end - start}")
