@@ -1,6 +1,7 @@
 import save_load
 from flask import Flask, render_template, request, make_response, jsonify
 from maestro_controller import LaserSystem
+import time
 
 try:
     if 'phidgets_ctlr' not in globals():
@@ -13,6 +14,7 @@ start_menu = save_load.StartMenu()
 all_items = start_menu.load(file_name='master_save_file')
 current_selection = ""
 blank_item = {'name': ''}
+key_pressed = False
 # This should set the server name. I had some issues getting this to work
 #app.config['SERVER_NAME'] = 'localhost:5000'
 
@@ -47,7 +49,9 @@ def submit_add_item():
 @app.route('/add/key_press', methods=["POST"])
 def key_press():
     req = request.get_json()
-
+    if key_pressed:
+        return jsonify(-1)
+    key_pressed = True
     if (req == 39):
         phidgets_ctlr.right_button_click()
     elif (req == 40):
@@ -57,6 +61,7 @@ def key_press():
     elif (req == 38):
         phidgets_ctlr.up_button_click()
     response = req
+    key_pressed = False
     return jsonify(response)
 
 @app.route('/delete', methods=['POST'])
