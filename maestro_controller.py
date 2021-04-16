@@ -31,8 +31,8 @@ class LaserSystem:
     
     def set_position(self, HorizontalAngle, VerticalAngle):
         """ Used for externally changing the position of the servos """
-        VerticalAngle = self.angle_conversion(VerticalAngle)
-        HorizontalAngle = self.angle_conversion(HorizontalAngle)
+        VerticalAngle = self.to_maestro(VerticalAngle)
+        HorizontalAngle = self.to_maestro(HorizontalAngle)
         thread1 = Thread(target=self.set_angle, args=(self.__ServoVertical, VerticalAngle))
         thread2 = Thread(target=self.set_angle, args=(self.__ServoHorizontal, HorizontalAngle))
         thread1.start()
@@ -50,9 +50,9 @@ class LaserSystem:
             and self.servo.getPosition(self.__ServoVertical) + y_dir.value * .01 * sensitivity >= self.servo.getMin(self.__ServoVertical) 
             and self.servo.getPosition(self.__ServoVertical) + y_dir.value * .01 * sensitivity <= self.servo.getMax(self.__ServoVertical)
            ):
-            x_pos = self.servo.getPosition(self.__ServoHorizontal) + x_dir.value * .01 * sensitivity
+            x_pos = self.to_degree(self.servo.getPosition(self.__ServoHorizontal)) + x_dir.value * .01 * sensitivity
 
-            y_pos = self.servo.getPosition(self.__ServoVertical) + y_dir.value * .01 * sensitivity
+            y_pos = self.to_degree(self.servo.getPosition(self.__ServoVertical)) + y_dir.value * .01 * sensitivity
             print(f"{x_pos}, {y_pos}")
             self.set_position(x_pos, y_pos)
             # self.__ServoHorizontal.angle = x_pos
@@ -62,21 +62,26 @@ class LaserSystem:
 
     def get_target_position(self):
         """ Functionally the same as get_angle, returns the set positions of the servos in a list """
-        return [self.servo.getPosition(self.__ServoHorizontal), self.servo.getPosition(self.__ServoVertical)]
+        return [self.to_degree(self.servo.getPosition(self.__ServoHorizontal)), self.to_degree(self.servo.getPosition(self.__ServoVertical))]
 
     def get_angle(self):
         """ Functionally the same as get_target_position, returns the set positions of the servos in a list """
-        return [self.servo.getPosition(self.__ServoHorizontal), self.servo.getPosition(self.__ServoVertical)]
+        return [self.to_degree(self.servo.getPosition(self.__ServoHorizontal)), self.to_degree(self.servo.getPosition(self.__ServoVertical))]
 
     def default_position(self):
         """ Sets the servos to a default position at 90, 90, which should point straight down."""
         self.set_position(90, 90)
         # Turn off laser diode
 
-    def angle_conversion(self, degree):
+    def to_maestro(self, degree):
         """ Converting from degree to servo range. """
         servo_angle = (degree * (9600 - 2400))/(180) + 2400
         return int(servo_angle)
+
+    def to_degree(self, maestro_value):
+        """ Converting from servo range to degree. """
+        servo_angle = ((maestro_value - 2400) * 180)/(9600 - 2400)
+        return float(servo_angle)
 
     def left_button_click(self):
         self.move_servo_position(x_dir=Direction.Negative, y_dir=Direction.NA, sensitivity=100)
@@ -120,8 +125,9 @@ if __name__ == '__main__':
     #     Pointer.set_position(96,131)
     #     time.sleep(.25)
 
-    print(Pointer.angle_conversion(91))
-    Pointer.set_position(90, 90)
+    print(Pointer.to_maestro(91))
+
+    print(Pointer.to_degree(6040))
 
     end = time.time()
     print(f"time elapsed: {end - start}")
