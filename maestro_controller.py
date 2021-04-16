@@ -1,4 +1,5 @@
 from Maestro import maestro
+from gpiozero import LED
 from enum import Enum
 from threading import Thread
 import time
@@ -9,6 +10,7 @@ class Direction(Enum):
     Positive=1
     Negative=-1
     NA=0
+
 
 class LaserSystem:
     def __init__(self):
@@ -22,13 +24,14 @@ class LaserSystem:
         self.servo.setRange(self.__ServoVertical, 2400, 9600)
         self.servo.setRange(self.__ServoHorizontal, 2400, 9600)
 
-        # initialize laser diode
+        self.laser = LED(17)
+        self.laser.off()
+
 
     def set_angle(self, servo_name, angle):
         """ Used for internally setting the servos angle variable and waiting for the positioning to complete """
         self.servo.setTarget(servo_name, angle)
         
-    
     def set_position(self, HorizontalAngle, VerticalAngle):
         """ Used for externally changing the position of the servos """
         VerticalAngle = self.to_maestro(VerticalAngle)
@@ -94,6 +97,15 @@ class LaserSystem:
         
     def down_button_click(self):
         self.move_servo_position(x_dir=Direction.NA, y_dir=Direction.Negative, sensitivity=100)
+
+    
+    def toggle_laser(self, state='off'):
+        if state == 'off':
+            self.laser.off()
+        elif state == 'on':
+            self.laser.on()
+        else:
+            print("invalid state in toggle_laser call")
     
 
 if __name__ == '__main__':
@@ -101,33 +113,11 @@ if __name__ == '__main__':
 
     Pointer = LaserSystem()
 
-    # Pointer.servo.setTarget(0, 18000)
-    # time.sleep(3)
-    # Pointer.servo.setTarget(0, 0)
-    # time.sleep(3)
-
-    # Pointer.servo.setTarget(1, 0)
-    # time.sleep(3)
-    # Pointer.servo.setTarget(1, 18000)
-    # time.sleep(3)
-    # Pointer.servo.setTarget(0, 1500 * 4)
-    # Pointer.servo.setTarget(1, 1500 * 4)
-
-    # for i in range(0, 51):
-    #     Pointer.set_position(0, 0)
-    #     Pointer.set_position(90, 90)
-
-
-    #Pointer.default_position()
-    # while(True):
-    #     Pointer.set_position(95,130)
-    #     time.sleep(.25)
-    #     Pointer.set_position(96,131)
-    #     time.sleep(.25)
-
-    print(Pointer.to_maestro(91))
-
-    print(Pointer.to_degree(6040))
+    for i in range(0, 50):
+        Pointer.laser.on()
+        time.sleep(.5)
+        Pointer.laser.off()
+        time.sleep(.5)
 
     end = time.time()
     print(f"time elapsed: {end - start}")
