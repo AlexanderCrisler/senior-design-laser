@@ -1,6 +1,6 @@
 import save_load
 from flask import Flask, render_template, request, make_response, jsonify
-from gpio_controller import LaserSystem
+from maestro_controller import LaserSystem
 
 try:
     if 'phidgets_ctlr' not in globals():
