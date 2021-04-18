@@ -74,7 +74,7 @@ class LaserSystem:
     def default_position(self):
         """ Sets the servos to a default position at 90, 90, which should point straight down."""
         self.set_position(90, 90)
-        # Turn off laser diode
+        self.toggle_laser()
 
     def to_maestro(self, degree):
         """ Converting from degree to servo range. """
@@ -100,6 +100,7 @@ class LaserSystem:
 
     
     def toggle_laser(self, state='off'):
+        """ Toggling the laser to defined state. """
         if state == 'off':
             self.laser.off()
         elif state == 'on':
