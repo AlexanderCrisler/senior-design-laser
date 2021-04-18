@@ -39,6 +39,7 @@ def submit_add_item():
     req = request.get_json()
     current_angle = phidgets_ctlr.get_target_position()
     temp_dictionary = {"horizontal": current_angle[0], "vertical": current_angle[1]}
+    temp_dictionary['description'] = req['description']
     all_items[req['name']] = temp_dictionary
     response = make_response(jsonify({'return': None}), 200)
     return response

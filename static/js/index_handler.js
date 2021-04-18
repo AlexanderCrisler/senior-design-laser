@@ -39,6 +39,7 @@ function highlight() {
    })
    .then(function (response) {
       response.json().then(function (data) {
+         document.getElementById("itemInfo").innerHTML = data['description']
       })
    })
 };
