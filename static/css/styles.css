@@ -65,24 +65,6 @@
 	}
 }
 
-<<<<<<< HEAD
-p1 {
-    background-color: DarkSlateGrey;
-    font-size: 40px;
-    color: yellow;
-    text-align: center;
-    vertical-align: top;
-    width: 60%;
-    display: block
-}
-
-.searchbar {
-    background-color: DarkSlateGrey;
-    font-size: 40px;
-    color: yellow;
-    width: 60%;
-    margin-bottom: 4px;
-=======
 @media only screen 
   and (max-device-width: 1250px) {
 
@@ -152,5 +134,4 @@ p1 {
 		width: 90%;
 		margin-bottom: 4px;
 	}
->>>>>>> 71ff4b7d8c2863f3ce1043c3a41c88aa2faa1eac
 }

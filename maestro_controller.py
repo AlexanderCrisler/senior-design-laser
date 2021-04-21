@@ -3,6 +3,7 @@ from gpiozero import LED
 from enum import Enum
 from threading import Thread
 import time
+import numpy as np
 
 # TODO: Add the ability to toggle laser diode
 
@@ -25,10 +26,10 @@ class LaserSystem:
         self.servo.setRange(self.__ServoHorizontal, 2400, 9600)
 
         self.laser = LED(17)
-        self.laser.off()
+        self.laser.on()
 
 
-    def set_angle(self, servo_name, angle):
+    def _set_angle(self, servo_name, angle):
         """ Used for internally setting the servos angle variable and waiting for the positioning to complete """
         self.servo.setTarget(servo_name, angle)
         
@@ -36,8 +37,8 @@ class LaserSystem:
         """ Used for externally changing the position of the servos """
         VerticalAngle = self.to_maestro(VerticalAngle)
         HorizontalAngle = self.to_maestro(HorizontalAngle)
-        thread1 = Thread(target=self.set_angle, args=(self.__ServoVertical, VerticalAngle))
-        thread2 = Thread(target=self.set_angle, args=(self.__ServoHorizontal, HorizontalAngle))
+        thread1 = Thread(target=self._set_angle, args=(self.__ServoVertical, VerticalAngle))
+        thread2 = Thread(target=self._set_angle, args=(self.__ServoHorizontal, HorizontalAngle))
         thread1.start()
         thread2.start()
 
@@ -98,6 +99,26 @@ class LaserSystem:
     def down_button_click(self):
         self.move_servo_position(x_dir=Direction.NA, y_dir=Direction.Negative, sensitivity=100)
 
+    def jiggle(self, iter=1):
+        origin = self.get_target_position()
+        print(f"origin: {origin}")
+
+        x = 0
+        y = 0
+
+        for i in range(0, iter):
+            for i in np.arange(0, 2 * np.pi, .1):
+                x = origin[0] + (3 * np.cos(i))
+                y = origin[1] + (3 * np.sin(i))
+                if( int(x) not in range(42, 49) or int(y) not in range(132, 139)):
+                    print(f"{x}, {y}")
+
+                self.set_position(x, y)
+                time.sleep(.05)
+        
+        self.set_position(origin[0], origin[1])
+        time.sleep(1)
+
     
     def toggle_laser(self, state='off'):
         """ Toggling the laser to defined state. """
@@ -113,12 +134,13 @@ if __name__ == '__main__':
     start = time.time()
 
     Pointer = LaserSystem()
-
-    for i in range(0, 50):
-        Pointer.laser.on()
-        time.sleep(.5)
-        Pointer.laser.off()
-        time.sleep(.5)
+    Pointer.set_position(45, 135)
+    time.sleep(1)
+    Pointer.toggle_laser(state='on')
+    
+    while(True):
+        Pointer.jiggle(50)
+    # print(Pointer.get_target_position())
 
     end = time.time()
     print(f"time elapsed: {end - start}")
