@@ -41,10 +41,22 @@ def submit_add_item():
     req = request.get_json()
     current_angle = phidgets_ctlr.get_target_position()
     temp_dictionary = {"horizontal": current_angle[0], "vertical": current_angle[1]}
-    temp_dictionary['description'] = req['description']
-    all_items[req['name']] = temp_dictionary
-    response = make_response(jsonify({'return': None}), 200)
-    return response
+    temp_dictionary['description'] = request.form['itemDescription']
+    image_filename = request.files['image_upload'].filename
+    if image_filename == '':
+        file_path = "static\images\default.jpg"
+    else:
+        file_path = os.path.join('static\images', image_filename)
+        if os.path.exists(file_path):
+            i = 1
+            extension_loc = file_path.find('.')
+            while os.path.exists(f"{file_path[:extension_loc]}_{i}{file_path[extension_loc:]}"):
+                i = i + 1
+            file_path = f"{file_path[:extension_loc]}_{i}{file_path[extension_loc:]}"
+        request.files['image_upload'].save(file_path)
+    temp_dictionary['image_file'] = file_path
+    all_items[request.form['itemName']] = temp_dictionary
+    return redirect(url_for('add_items'))
 
 @app.route('/add/key_press', methods=["POST"])
 def key_press():
@@ -70,6 +82,7 @@ def delete_item():
     #print(req, flush=True)
     #print(all_items[req['name']].strip())
     popped = all_items.pop(req['name'].strip(), None)
+    os.remove(popped['image_file'])
     response = make_response(jsonify({'return': None}), 200 if popped == 1 else 100)
     return response
 

@@ -40,6 +40,14 @@ function highlight() {
    .then(function (response) {
       response.json().then(function (data) {
          document.getElementById("itemInfo").innerHTML = data['description']
+         document.getElementById("itemPicture").innerHTML = ''
+         var pic = document.createElement("picture")
+         var img = document.createElement("img")
+         img.src = data['image_file']
+         img.alt = "Picture not found. Please add one!"
+         img.height = document.getElementById("itemInfo").clientHeight
+         pic.appendChild(img)
+         document.getElementById("itemPicture").appendChild(pic)
       })
    })
 };

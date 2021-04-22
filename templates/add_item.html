@@ -10,13 +10,19 @@
   url_for('static', filename='js/add_item_handler.js') }}"></script>
 
 <body>
+  <label>Item Name:  </label>
+   <form method="POST" action="/add/submit" enctype="multipart/form-data">
+      <input name='itemName' type="text" class="searchbar" id="itemName"><br><br>
+      <label>Description: </label>
+      <textarea name='itemDescription' type="text" class="searchbar" id="itemDescription"></textarea><br><br>
+      <input name='image_upload' id="image_upload" type="file"/>
+      <input type="submit" value="Add Item">
+   </form>
 <p>
-   <label>Item Name:  </label>
-   <input type="text" class="searchbar" id="itemName"><br><br>
-   <label>Description: </label>
-   <textarea type="text" class="searchbar" id="itemDescription"></textarea><br><br>
+   
+   
+   
    <label>Use arrow keys to direct laser to target location.</label>
-   <button onclick="add_item_click()">Save Item</button>
    <button><a href='/'>Back</a></button>
 </p>
 
