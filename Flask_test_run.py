@@ -62,7 +62,6 @@ def submit_add_item():
 def key_press():
     req = request.get_json()
     print(req, flush=True)
-    print(type(req))
     if (req == 39):
         phidgets_ctlr.right_button_click()
     elif (req == 40):
