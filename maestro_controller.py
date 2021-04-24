@@ -69,6 +69,8 @@ class LaserSystem:
                 #print(self.get_angle())
         except serial.serialutil.SerialException:
             print("uwu you hit a wittle bumpy wumpy")
+            time.sleep(1)
+            self.__init__()
 
     def get_target_position(self):
         """ Functionally the same as get_angle, returns the set positions of the servos in a list """
