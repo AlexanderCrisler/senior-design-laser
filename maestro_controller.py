@@ -49,7 +49,9 @@ class LaserSystem:
         """ Smooth locomotion of the servos, preferably through arrow keys or buttons """
         # x_dir and y_dir should be set to -1, 0 , 1 depending on their direction
         if (
-            self.servo.getPosition(self.__ServoHorizontal) + x_dir.value * .01 * sensitivity >= self.servo.getMin(self.__ServoHorizontal)
+            not self.servo.isMoving(self.__ServoHorizontal)
+            and not self.servo.isMoving(self.__ServoHorizontal)
+            and self.servo.getPosition(self.__ServoHorizontal) + x_dir.value * .01 * sensitivity >= self.servo.getMin(self.__ServoHorizontal)
             and self.servo.getPosition(self.__ServoHorizontal) + x_dir.value * .01 * sensitivity <= self.servo.getMax(self.__ServoHorizontal)
             and self.servo.getPosition(self.__ServoVertical) + y_dir.value * .01 * sensitivity >= self.servo.getMin(self.__ServoVertical) 
             and self.servo.getPosition(self.__ServoVertical) + y_dir.value * .01 * sensitivity <= self.servo.getMax(self.__ServoVertical)
