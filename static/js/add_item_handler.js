@@ -18,9 +18,9 @@ document.addEventListener('keydown', event => {
          })
          .then(function (response) {
             response.json().then(function (data) {
+               move_called = false
             })
          })
       }
-      move_called = false
    }
 );
