@@ -48,23 +48,26 @@ class LaserSystem:
     def move_servo_position(self, x_dir=Direction.NA, y_dir=Direction.NA, sensitivity=1):
         """ Smooth locomotion of the servos, preferably through arrow keys or buttons """
         # x_dir and y_dir should be set to -1, 0 , 1 depending on their direction
-        if (
-            not self.servo.isMoving(self.__ServoHorizontal)
-            and not self.servo.isMoving(self.__ServoHorizontal)
-            and self.servo.getPosition(self.__ServoHorizontal) + x_dir.value * .01 * sensitivity >= self.servo.getMin(self.__ServoHorizontal)
-            and self.servo.getPosition(self.__ServoHorizontal) + x_dir.value * .01 * sensitivity <= self.servo.getMax(self.__ServoHorizontal)
-            and self.servo.getPosition(self.__ServoVertical) + y_dir.value * .01 * sensitivity >= self.servo.getMin(self.__ServoVertical) 
-            and self.servo.getPosition(self.__ServoVertical) + y_dir.value * .01 * sensitivity <= self.servo.getMax(self.__ServoVertical)
-           ):
-            x_pos = self.to_degree(self.servo.getPosition(self.__ServoHorizontal)) + x_dir.value * .01 * sensitivity
+        try:
+            if (
+                not self.servo.isMoving(self.__ServoHorizontal)
+                and not self.servo.isMoving(self.__ServoHorizontal)
+                and self.servo.getPosition(self.__ServoHorizontal) + x_dir.value * .01 * sensitivity >= self.servo.getMin(self.__ServoHorizontal)
+                and self.servo.getPosition(self.__ServoHorizontal) + x_dir.value * .01 * sensitivity <= self.servo.getMax(self.__ServoHorizontal)
+                and self.servo.getPosition(self.__ServoVertical) + y_dir.value * .01 * sensitivity >= self.servo.getMin(self.__ServoVertical) 
+                and self.servo.getPosition(self.__ServoVertical) + y_dir.value * .01 * sensitivity <= self.servo.getMax(self.__ServoVertical)
+            ):
+                x_pos = self.to_degree(self.servo.getPosition(self.__ServoHorizontal)) + x_dir.value * .01 * sensitivity
 
-            y_pos = self.to_degree(self.servo.getPosition(self.__ServoVertical)) + y_dir.value * .01 * sensitivity
-            print(f"{x_pos}, {y_pos}")
-            self.set_position(x_pos, y_pos)
-            # self.__ServoHorizontal.angle = x_pos
-            # self.__ServoVertical.angle = y_pos
+                y_pos = self.to_degree(self.servo.getPosition(self.__ServoVertical)) + y_dir.value * .01 * sensitivity
+                print(f"{x_pos}, {y_pos}")
+                self.set_position(x_pos, y_pos)
+                # self.__ServoHorizontal.angle = x_pos
+                # self.__ServoVertical.angle = y_pos
 
-            #print(self.get_angle())
+                #print(self.get_angle())
+        except serial.serialutil.SerialException:
+            print("uwu you hit a wittle bumpy wumpy")
 
     def get_target_position(self):
         """ Functionally the same as get_angle, returns the set positions of the servos in a list """
