@@ -61,6 +61,7 @@ def submit_add_item():
 @app.route('/add/key_press', methods=["POST"])
 def key_press():
     req = request.get_json()
+    print(req, flush=True)
     if (req == 39):
         phidgets_ctlr.right_button_click()
     elif (req == 40):
