@@ -48,7 +48,7 @@ def submit_add_item():
         print(e)
         file_path = "static\images\default.jpg"
     else:
-        file_path = os.path.join('static\images', image_filename)
+        file_path = os.path.join('static', 'images', image_filename)
         if os.path.exists(file_path):
             i = 1
             extension_loc = file_path.find('.')
