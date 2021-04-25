@@ -42,8 +42,10 @@ def submit_add_item():
     current_angle = phidgets_ctlr.get_target_position()
     temp_dictionary = {"horizontal": current_angle[0], "vertical": current_angle[1]}
     temp_dictionary['description'] = request.form['itemDescription']
-    image_filename = request.files['image_upload'].filename
-    if image_filename == '':
+    try:
+        image_filename = request.files['image_upload'].filename
+    except Exception as e:
+        print(e)
         file_path = "static\images\default.jpg"
     else:
         file_path = os.path.join('static\images', image_filename)
