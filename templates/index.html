@@ -14,14 +14,16 @@
       <button id="searchbutton" onclick="searchItem()">Search</button>
    </div>
 
-   <div>
+   <div class="main">
    <select class='items' id="items" onChange="highlight();" border = 1 size=10>
       {% for key in result %}
          <option> {{key}} </option>
       {% endfor %}
    </select>
-   <p1 id=itemInfo></p1>
-   <p2 id=itemPicture></p2>
+      <div class="sub">
+         <p1 id=itemInfo></p1>
+         <p2 id=itemPicture></p2>
+      </div>
    </div>
    
    </p>
