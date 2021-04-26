@@ -1,0 +1,98 @@
+{
+    "1/4-20 Button  Head": {
+        "description": "screws",
+        "horizontal": 54.2,
+        "image_file": "static\\images\\default.jpg",
+        "vertical": 7.15
+    },
+    "Camera Mounts": {
+        "description": "",
+        "horizontal": 163.175,
+        "image_file": "static\\images\\default.jpg",
+        "vertical": 69.0
+    },
+    "Distance Sensors": {
+        "description": "Distance Sensors",
+        "horizontal": 160.175,
+        "image_file": "static\\images\\default.jpg",
+        "vertical": 63.0
+    },
+    "Fuses": {
+        "description": "",
+        "horizontal": 37.175,
+        "image_file": "/home/pi/Documents/Robert_Senior_Design/senior-design-laser/static/images/default.jpg",
+        "vertical": 43.4
+    },
+    "Home": {
+        "description": "Home Position",
+        "horizontal": 2.2,
+        "image_file": "static/images/HomeIcon_3.jpg",
+        "vertical": 0.15
+    },
+    "Led Strips": {
+        "description": "",
+        "horizontal": 155.175,
+        "image_file": "static\\images\\default.jpg",
+        "vertical": 87.0
+    },
+    "Male Flow Control": {
+        "description": "",
+        "horizontal": 54.175,
+        "image_file": "static\\images\\default.jpg",
+        "vertical": 21.4
+    },
+    "Packing Materials": {
+        "description": "packaging",
+        "horizontal": 150.175,
+        "image_file": "static\\images\\default.jpg",
+        "vertical": 57.0
+    },
+    "Pressure Regulators": {
+        "description": "",
+        "horizontal": 158.175,
+        "image_file": "static\\images\\default.jpg",
+        "vertical": 98.0
+    },
+    "Safety Relays": {
+        "description": "",
+        "horizontal": 149.175,
+        "image_file": "static\\images\\default.jpg",
+        "vertical": 65.0
+    },
+    "Single Board Computers": {
+        "description": "",
+        "horizontal": 146.175,
+        "image_file": "static\\images\\default.jpg",
+        "vertical": 51.0
+    },
+    "Vacuum Generators": {
+        "description": "",
+        "horizontal": 162.175,
+        "image_file": "static\\images\\default.jpg",
+        "vertical": 103.0
+    },
+    "Velcro": {
+        "description": "",
+        "horizontal": 150.175,
+        "image_file": "static\\images\\default.jpg",
+        "vertical": 93.0
+    },
+    "Vision Cameras": {
+        "description": "",
+        "horizontal": 156.175,
+        "image_file": "static\\images\\default.jpg",
+        "vertical": 72.0
+    },
+    "Wood Screws": {
+        "description": "",
+        "horizontal": 41.175,
+        "image_file": "/home/pi/Documents/Robert_Senior_Design/senior-design-laser/static/images/default.jpg",
+        "vertical": 84.0
+    },
+    "Zip ties": {
+        "description": "",
+        "horizontal": 150.175,
+        "image_file": "static\\images\\default.jpg",
+        "vertical": 93.0
+    }
+}

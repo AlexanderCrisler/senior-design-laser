@@ -123,12 +123,13 @@
 		color: red;
 		text-align: center;
 	}
-	
+
+
 	select.items{
-		font-size: 500%;
+		font-size: 400%;
 		color: black;
 		text-align: left;
-	    height: 200px;
+	    	height: 20%;
 		width: 100%;
 	}
 
@@ -138,12 +139,11 @@
 
 	button {
 		background-color: #BDB8AD;
-		font-size: 300%;
-		width: 45%;
+		font-size: 249%;
+		width: 49%;
 		height: 10%;
 		margin-top: 5px;
 		margin-bottom: 5px;
-		
 	}
 	
 	input[type=submit] {
@@ -165,7 +165,7 @@
 	}
 
 	div.buttons {
-		float: left;
+		width: 100%;
 	}
 
 
