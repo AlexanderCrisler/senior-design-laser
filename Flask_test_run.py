@@ -11,8 +11,9 @@ except:
     print("No phidget detected, will run headless")
 
 app = Flask(__name__)
+AppPath=os.path.dirname(os.path.abspath)
 start_menu = save_load.StartMenu()
-all_items = start_menu.load(file_name='master_save_file')
+all_items = start_menu.load(file_name=AppPath +'/master_save_file')
 current_selection = ""
 blank_item = {'name': ''}
 # This should set the server name. I had some issues getting this to work
@@ -58,7 +59,7 @@ def submit_add_item():
         request.files['image_upload'].save(file_path)
     temp_dictionary['image_file'] = file_path
     all_items[request.form['itemName']] = temp_dictionary
-    start_menu.save(items=all_items, file_name='master_save_file')
+    start_menu.save(items=all_items, file_name=AppPath +'/master_save_file')
     return redirect(url_for('add_items'))
 
 @app.route('/add/key_press', methods=["POST"])
@@ -84,7 +85,7 @@ def delete_item():
     popped = all_items.pop(req['name'].strip(), None)
     os.remove(popped['image_file'])
     response = make_response(jsonify({'return': None}), 200 if popped == 1 else 100)
-    start_menu.save(items=all_items, file_name='master_save_file')
+    start_menu.save(items=all_items, file_name=AppPath +'/master_save_file')
     return response
 
 @app.route('/get_all_items', methods=['GET'])
