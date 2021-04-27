@@ -138,8 +138,8 @@
 
 	button {
 		background-color: #BDB8AD;
-		font-size: 500%;
-		width: 100%;
+		font-size: 300%;
+		width: 45%;
 		height: 10%;
 		margin-top: 5px;
 		margin-bottom: 5px;
@@ -165,8 +165,7 @@
 	}
 
 	div.buttons {
-		margin-left: auto;
-		margin-right: auto;
+		float: left;
 	}
 
 

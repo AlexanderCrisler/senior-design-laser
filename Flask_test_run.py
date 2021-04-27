@@ -47,9 +47,9 @@ def submit_add_item():
         image_filename = request.files['image_upload'].filename
     except Exception as e:
         print(e)
-        file_path = "static\images\default.jpg"
+        file_path = AppPath + '/static/images/default.jpg'
     else:
-        file_path = os.path.join('static', 'images', image_filename)
+        file_path = os.path.join(AppPath +'/static', 'images', image_filename)
         if os.path.exists(file_path):
             i = 1
             extension_loc = file_path.find('.')
