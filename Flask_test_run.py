@@ -11,7 +11,7 @@ except:
     print("No phidget detected, will run headless")
 
 app = Flask(__name__)
-AppPath=os.path.dirname(os.path.abspath)
+AppPath=os.path.dirname(os.path.abspath(__file__))
 start_menu = save_load.StartMenu()
 all_items = start_menu.load(file_name=AppPath +'/master_save_file')
 current_selection = ""
